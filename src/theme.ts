@@ -1,4 +1,4 @@
-const { createTheme } = require('@mui/material/styles');
+import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
   palette: {
@@ -7,6 +7,12 @@ export const theme = createTheme({
     },
     primary: {
       main: '#CD8B65',
+      light:
+        'linear-gradient(94.75deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0) 100.7%)',
+    },
+    text: {
+      primary: '#2F2F2F',
+      secondary: '#9F9F9F',
     },
   },
   components: {

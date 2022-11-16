@@ -6,7 +6,9 @@ import {
   CssBaseline,
 } from '@mui/material';
 import { theme } from './theme';
+
 import { Layout } from 'components/Layout';
+import { StepOne } from 'screens/StepOne';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +18,9 @@ export const App = memo(() => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Layout />
+          <Layout>
+            <StepOne />
+          </Layout>
         </ThemeProvider>
       </QueryClientProvider>
     </StyledEngineProvider>

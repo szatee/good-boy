@@ -7,5 +7,14 @@
     "how_do_it": "Ako na to",
     "contact": "Kontakt",
     "lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in interdum ipsum, sit amet. "
+  },
+  "step_one": {
+    "title": "Vyberte si možnosť, ako chcete pomôcť"
+  },
+  "step_two": {
+    "title": "Potrebujeme od Vás zopár informácií"
+  },
+  "step_three": {
+    "title": "Skontrolujte si zadané údaje"
   }
 }
