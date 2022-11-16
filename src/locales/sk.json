@@ -1,5 +1,11 @@
 {
   "common": {
-    "test": "GoodBoy"
+    "foundation": "Nadácia Good Boy"
+  },
+  "footer": {
+    "about": "O projekte",
+    "how_do_it": "Ako na to",
+    "contact": "Kontakt",
+    "lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in interdum ipsum, sit amet. "
   }
 }
