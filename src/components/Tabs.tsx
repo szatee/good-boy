@@ -1,11 +1,18 @@
 import { memo, Fragment, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Stepper } from 'components/Common/Stepper';
 import { StepOne } from 'screens/StepOne';
 import { StepTwo } from 'screens/StepTwo';
 import { StepThree } from 'screens/StepThree';
 
 export const Tabs = memo(() => {
-  const step: number = 2;
+  const step = useSelector<{ tab: { value: number } }>(
+    (state) => state.tab.value,
+  );
+
+  // console.log(count);
+
+  // const step: number = 0;
 
   const renderStep = useMemo(() => {
     switch (step) {
@@ -20,7 +27,7 @@ export const Tabs = memo(() => {
 
   return (
     <Fragment>
-      <Stepper step={step} />
+      <Stepper />
       {renderStep}
     </Fragment>
   );

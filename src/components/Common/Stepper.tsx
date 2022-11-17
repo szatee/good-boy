@@ -1,12 +1,16 @@
 import { memo, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@mui/material';
 import { Step } from './Step';
 
 const steps = [0, 1, 2];
 
-export const Stepper = memo(({ step }: { step: number }) => {
+export const Stepper = memo(() => {
   const { t } = useTranslation();
+  const step = useSelector<{ tab: { value: number } }>(
+    (state) => state.tab.value,
+  );
 
   const renderTitle = useMemo(() => {
     switch (step) {

@@ -16,6 +16,7 @@ export const Button = memo(
   }: {
     children: ReactNode;
     color?: 'primary' | 'secondary';
+    onClick?: () => void;
   }) => {
     return (
       <StyledButton variant="contained" {...rest}>

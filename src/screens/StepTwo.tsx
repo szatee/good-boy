@@ -1,5 +1,7 @@
 import { memo, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { setTab } from 'store/tabSlice';
 import { styled } from '@mui/material/styles';
 import {
   Grid,
@@ -21,6 +23,7 @@ const Wrapper = styled('div')`
 
 export const StepTwo = memo(() => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -31,6 +34,9 @@ export const StepTwo = memo(() => {
   );
 
   const handleCloseMenu = useCallback(() => setAnchorEl(null), []);
+
+  const handleBack = useCallback(() => dispatch(setTab(0)), [dispatch]);
+  const handleSubmit = useCallback(() => dispatch(setTab(2)), [dispatch]);
 
   return (
     <Wrapper>
@@ -85,8 +91,12 @@ export const StepTwo = memo(() => {
       <br />
       <br />
       <Grid container justifyContent="space-between">
-        <Button color="secondary">{t('step_two.back')}</Button>
-        <Button color="primary">{t('step_two.submit')}</Button>
+        <Button color="secondary" onClick={handleBack}>
+          {t('step_two.back')}
+        </Button>
+        <Button color="primary" onClick={handleSubmit}>
+          {t('step_two.submit')}
+        </Button>
       </Grid>
     </Wrapper>
   );

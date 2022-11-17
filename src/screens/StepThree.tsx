@@ -1,5 +1,7 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { setTab } from 'store/tabSlice';
 import { styled } from '@mui/material/styles';
 import { FormControlLabel, Grid, Typography } from '@mui/material';
 import { Checkbox } from 'components/Common/Checkbox';
@@ -11,6 +13,8 @@ const Wrapper = styled('div')`
 
 export const StepThree = memo(() => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const handleBack = useCallback(() => dispatch(setTab(1)), [dispatch]);
 
   return (
     <Wrapper>
@@ -77,7 +81,9 @@ export const StepThree = memo(() => {
       <br />
       <br />
       <Grid container justifyContent="space-between">
-        <Button color="secondary">{t('step_three.back')}</Button>
+        <Button color="secondary" onClick={handleBack}>
+          {t('step_three.back')}
+        </Button>
         <Button color="primary">{t('step_three.submit')}</Button>
       </Grid>
     </Wrapper>
