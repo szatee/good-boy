@@ -1,7 +1,7 @@
 import { memo, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Card, CARD_SIDE } from 'components/Common/Card';
 import { Select } from 'components/Common/Select';
 
@@ -48,10 +48,18 @@ export const StepOne = memo(() => {
       </Grid>
       <br />
       <br />
-      <Select
-        label={t('step_one.select.label')}
-        placeholder={t('step_one.select.placeholder')}
-      />
+      <Grid container spacing={2}>
+        <Grid container item justifyContent="space-between">
+          <Typography variant="h2">{t('step_one.select.about')}</Typography>
+          <Typography variant="h4">{t('step_one.select.optional')}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Select
+            label={t('step_one.select.label')}
+            placeholder={t('step_one.select.placeholder')}
+          />
+        </Grid>
+      </Grid>
     </Wrapper>
   );
 });

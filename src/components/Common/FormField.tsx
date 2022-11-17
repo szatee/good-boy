@@ -21,14 +21,16 @@ export const FormField = memo(
     children,
     error,
     helperText,
+    onClick,
   }: {
     label?: string;
     error?: boolean;
     helperText?: string;
     children: ReactNode;
+    onClick?: () => void;
   }) => (
     <Fragment>
-      <Wrapper error={error}>
+      <Wrapper error={error} onClick={onClick}>
         <Typography variant="h2">{label}</Typography>
         {children}
       </Wrapper>

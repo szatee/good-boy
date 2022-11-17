@@ -15,8 +15,11 @@
       "foundation": "Chcem finančne prispieť celej nadácii"
     },
     "select": {
+      "about": "O projekte",
       "label": "Útulok",
-      "placeholder": "Vyberte útulok zo zoznamu"
+      "placeholder": "Vyberte útulok zo zoznamu",
+      "optional": "Nepovinné",
+      "required": "Povinné"
     }
   },
   "step_two": {

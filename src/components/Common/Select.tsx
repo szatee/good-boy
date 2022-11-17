@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Select as MSelect, MenuItem, Typography } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
@@ -31,9 +31,17 @@ export const Select = memo(
     error?: boolean;
     helperText?: string;
   }) => {
+    const [open, setOpen] = useState(false);
+
+    const handleToggleOpen = useCallback(
+      () => setOpen((prevState) => !prevState),
+      [],
+    );
+
     return (
-      <FormField {...props}>
+      <FormField {...props} onClick={handleToggleOpen}>
         <StyledSelect
+          open={open}
           displayEmpty
           renderValue={(selected: any) => {
             if (!selected) {
