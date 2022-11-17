@@ -14,7 +14,7 @@ const Active = styled('div')`
   height: 6px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.palette.primary.main};
-  background-image: ${({ theme }) => theme.palette.primary.light};
+  background-image: ${({ theme }) => theme.palette.primary.dark};
 `;
 
 export const Step = memo(({ active }: { active?: boolean }) => {

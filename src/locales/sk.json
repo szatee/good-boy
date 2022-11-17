@@ -9,7 +9,11 @@
     "lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in interdum ipsum, sit amet. "
   },
   "step_one": {
-    "title": "Vyberte si možnosť, ako chcete pomôcť"
+    "title": "Vyberte si možnosť, ako chcete pomôcť",
+    "card": {
+      "specific_shelter": "Chcem finančne prispieť konkrétnemu útulku",
+      "foundation": "Chcem finančne prispieť celej nadácii"
+    }
   },
   "step_two": {
     "title": "Potrebujeme od Vás zopár informácií"
