@@ -11,6 +11,7 @@ import wallet_grey from 'assets/svg/wallet_grey.svg';
 import wallet_white from 'assets/svg/wallet_white.svg';
 import paw_grey from 'assets/svg/paw_grey.svg';
 import paw_white from 'assets/svg/paw_white.svg';
+import { Button } from 'components/Common/Button';
 
 const amounts = [5, 10, 20, 30, 50, 100];
 
@@ -80,6 +81,12 @@ export const StepOne = memo(() => {
             <AmountField />
           </Grid>
         </Grid>
+      </Grid>
+      <br />
+      <br />
+      <br />
+      <Grid container justifyContent="flex-end">
+        <Button color="primary">{t('step_one.submit')}</Button>
       </Grid>
     </Wrapper>
   );

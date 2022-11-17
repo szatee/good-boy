@@ -21,6 +21,7 @@
       "optional": "Nepovinné",
       "required": "Povinné"
     },
+    "submit": "Pokračovať",
     "title": "Vyberte si možnosť, ako chcete pomôcť"
   },
   "step_two": {

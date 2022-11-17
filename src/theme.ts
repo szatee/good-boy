@@ -37,11 +37,27 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          padding: '20px 24px',
           borderRadius: '100px',
           textTransform: 'initial',
           fontSize: '14px',
           fontWeight: '800',
           lineHeight: '19px',
+        },
+        containedPrimary: {
+          backgroundImage: 'linear-gradient(180deg, #CD8B65 0%, #BB6B3D 100%)',
+          color: '#FFFFFF',
+          ':disabled': {
+            backgroundImage: 'none',
+            backgroundColor: '#9F9F9F',
+            color: '#FFFFFF',
+          },
+        },
+        containedSecondary: {
+          backgroundColor: '#F3E2D9',
+          ':hover': {
+            backgroundColor: '#F3E2D9',
+          },
         },
       },
     },
