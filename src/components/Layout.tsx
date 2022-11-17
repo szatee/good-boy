@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import { Grid, Divider as MDivider } from '@mui/material';
 import { Header } from './Header';
 import { Footer } from './Footer';
-import { Stepper } from 'components/Common/Stepper';
 
 import dog from 'assets/dog.png';
 
@@ -23,7 +22,6 @@ export const Layout = memo(({ children }: { children?: ReactNode }) => (
     <Wrapper>
       <Grid container justifyContent="space-between">
         <Grid item xs={6}>
-          <Stepper />
           {children}
         </Grid>
         <Grid item xs={4}>

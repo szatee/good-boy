@@ -8,7 +8,7 @@ import {
 import { theme } from './theme';
 
 import { Layout } from 'components/Layout';
-import { StepOne } from 'screens/StepOne';
+import { Tabs } from 'components/Tabs';
 
 const queryClient = new QueryClient();
 
@@ -19,7 +19,7 @@ export const App = memo(() => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Layout>
-            <StepOne />
+            <Tabs />
           </Layout>
         </ThemeProvider>
       </QueryClientProvider>

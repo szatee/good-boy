@@ -1,25 +1,35 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@mui/material';
 import { Step } from './Step';
 
-export const Stepper = memo(() => {
+const steps = [0, 1, 2];
+
+export const Stepper = memo(({ step }: { step: number }) => {
   const { t } = useTranslation();
+
+  const renderTitle = useMemo(() => {
+    switch (step) {
+      case 0:
+        return t('step_one.title');
+      case 1:
+        return t('step_two.title');
+      case 2:
+        return t('step_three.title');
+    }
+  }, [step, t]);
+
   return (
     <Grid container spacing={3}>
       <Grid container item spacing={1}>
-        <Grid item>
-          <Step active={true} />
-        </Grid>
-        <Grid item>
-          <Step />
-        </Grid>
-        <Grid item>
-          <Step />
-        </Grid>
+        {steps.map((item, index) => (
+          <Grid item key={index}>
+            <Step active={item === step} />
+          </Grid>
+        ))}
       </Grid>
       <Grid item>
-        <Typography variant="h1">{t('step_one.title')}</Typography>
+        <Typography variant="h1">{renderTitle}</Typography>
       </Grid>
     </Grid>
   );
