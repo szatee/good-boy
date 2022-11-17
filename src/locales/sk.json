@@ -13,6 +13,10 @@
     "card": {
       "specific_shelter": "Chcem finančne prispieť konkrétnemu útulku",
       "foundation": "Chcem finančne prispieť celej nadácii"
+    },
+    "select": {
+      "label": "Útulok",
+      "placeholder": "Vyberte útulok zo zoznamu"
     }
   },
   "step_two": {

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { Card, CARD_SIDE } from 'components/Common/Card';
+import { Select } from 'components/Common/Select';
 
 import wallet_grey from 'assets/svg/wallet_grey.svg';
 import wallet_white from 'assets/svg/wallet_white.svg';
@@ -45,6 +46,12 @@ export const StepOne = memo(() => {
           />
         </Grid>
       </Grid>
+      <br />
+      <br />
+      <Select
+        label={t('step_one.select.label')}
+        placeholder={t('step_one.select.placeholder')}
+      />
     </Wrapper>
   );
 });
