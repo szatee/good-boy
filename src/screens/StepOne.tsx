@@ -1,7 +1,8 @@
 import { memo, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
+import { Shelter } from 'models/shelter';
 import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
 import { Card, CARD_SIDE } from 'components/Common/Card';
@@ -24,6 +25,11 @@ const Wrapper = styled('div')`
 export const StepOne = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const shelters = useSelector<{ shelters: { value: Shelter[] } }>(
+    (state) => state.shelters.value,
+  ) as Shelter[];
+
+  console.log(shelters);
   const [active, setActive] = useState(CARD_SIDE.LEFT);
   const handleChange = useCallback(
     (type: CARD_SIDE) => () => {
@@ -68,6 +74,7 @@ export const StepOne = memo(() => {
           <Select
             label={t('step_one.select.label')}
             placeholder={t('step_one.select.placeholder')}
+            items={shelters}
           />
         </Grid>
       </Grid>

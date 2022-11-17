@@ -15,4 +15,4 @@ export const tabSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { setTab } = tabSlice.actions;
 
-export default tabSlice.reducer;
+export const tabReducer = tabSlice.reducer;

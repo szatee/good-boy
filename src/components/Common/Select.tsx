@@ -26,6 +26,7 @@ const Placeholder = styled(Typography)`
 
 export const Select = memo(
   (props: {
+    items?: any[];
     label: string;
     placeholder: string;
     error?: boolean;
@@ -38,6 +39,8 @@ export const Select = memo(
       [],
     );
 
+    const { placeholder, items } = props;
+
     return (
       <FormField {...props} onClick={handleToggleOpen}>
         <StyledSelect
@@ -45,16 +48,22 @@ export const Select = memo(
           displayEmpty
           renderValue={(selected: any) => {
             if (!selected) {
-              return <Placeholder>{props.placeholder}</Placeholder>;
+              return <Placeholder>{placeholder}</Placeholder>;
             }
-            return selected;
+            const { name } = items?.find(({ id }) => id === selected) ?? {};
+            return name;
           }}
           IconComponent={KeyboardArrowDown}
           fullWidth
         >
           <MenuItem disabled value="">
-            <Typography>{props.placeholder}</Typography>
+            <Typography>{placeholder}</Typography>
           </MenuItem>
+          {items?.map(({ id, name }) => (
+            <MenuItem key={id} value={id}>
+              <Typography>{name}</Typography>
+            </MenuItem>
+          ))}
         </StyledSelect>
       </FormField>
     );

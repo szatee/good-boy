@@ -13,25 +13,20 @@ export const apiFetch = async <T>(params: any): Promise<T> => {
     body,
   });
 
-  let response;
-
-  try {
-    response = await res.clone().json();
-  } catch {
-    const errorMessage = await res.text();
-    throw new Error(errorMessage);
-  }
+  const response = await res.json();
 
   return response;
 };
 
 export const useQuery = <T>({
   route,
+  method = 'GET',
 }: {
   route: string;
+  method?: string;
 } & UseQueryOptions<T>) => {
-  const fetch = useFetchData<T>();
-  return query(route, () => fetch({ route }));
+  const fetch = useFetch<T>();
+  return query(route, () => fetch({ method, route }));
 };
 
 export const useMutation = <T>({
@@ -42,30 +37,12 @@ export const useMutation = <T>({
   route: string;
   method?: string;
 }) => {
-  const fetch = useFetchData<T>();
-
+  const fetch = useFetch<T>();
   return mutation((payload: any) => fetch({ method, route, payload }), {
     ...rest,
   });
 };
 
-const useFetch = () => {
-  return useCallback(<T>(params: any) => apiFetch<T>(params), []);
-};
-
-export const useFetchData = <T>() => {
-  const fetch = useFetch();
-  return useCallback(
-    async (params: any) => {
-      const { error, data } = await fetch<{
-        error?: { code: number };
-        data: T;
-      }>(params);
-      if (error) {
-        throw new Error(error.code.toString());
-      }
-      return data;
-    },
-    [fetch],
-  );
+const useFetch = <T>() => {
+  return useCallback((params: any) => apiFetch<T>(params), []);
 };
