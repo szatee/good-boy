@@ -29,7 +29,6 @@ export const StepOne = memo(() => {
     (state) => state.shelters.value,
   ) as Shelter[];
 
-  console.log(shelters);
   const [active, setActive] = useState(CARD_SIDE.LEFT);
   const handleChange = useCallback(
     (type: CARD_SIDE) => () => {
