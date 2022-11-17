@@ -15,6 +15,11 @@ const Wrapper = styled('div')<{ error?: boolean }>`
   }
 `;
 
+const HelperText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.error.main};
+  text-align: right;
+`;
+
 export const FormField = memo(
   ({
     label,
@@ -36,7 +41,7 @@ export const FormField = memo(
         <Typography variant="h2">{label}</Typography>
         {children}
       </Wrapper>
-      <Typography>{helperText}</Typography>
+      <HelperText>{helperText}</HelperText>
     </Fragment>
   ),
 );

@@ -25,6 +25,24 @@
     "title": "Vyberte si možnosť, ako chcete pomôcť"
   },
   "step_two": {
+    "about": "O Vás",
+    "back": "Späť",
+    "form": {
+      "label": {
+        "first_name": "Meno",
+        "last_name": "Priezvisko",
+        "email": "E-mailová adresa",
+        "phone": "Telefónne číslo"
+      },
+      "placeholder": {
+        "first_name": "Zadajte Vaše meno",
+        "last_name": "Zadajte Vaše priezvisko",
+        "email": "Zadajte Váš e-mail",
+        "phone_sk": "+421",
+        "phone_cs": "+420"
+      }
+    },
+    "submit": "Pokračovať",
     "title": "Potrebujeme od Vás zopár informácií"
   },
   "step_three": {
