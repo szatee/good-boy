@@ -10,6 +10,7 @@ export const theme = createTheme({
       main: '#CD8B65',
       dark: 'linear-gradient(94.75deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0) 100.7%)',
       light: 'linear-gradient(180deg, #CD8B65 0%, #BB6B3D 100%)',
+      contrastText: '#AB7455',
     },
     secondary: {
       main: '#9F9F9F',

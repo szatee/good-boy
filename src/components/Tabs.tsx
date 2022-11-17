@@ -5,7 +5,7 @@ import { StepTwo } from 'screens/StepTwo';
 import { StepThree } from 'screens/StepThree';
 
 export const Tabs = memo(() => {
-  const step: number = 1;
+  const step: number = 2;
 
   const renderStep = useMemo(() => {
     switch (step) {

@@ -46,6 +46,15 @@
     "title": "Potrebujeme od Vás zopár informácií"
   },
   "step_three": {
+    "amount": "Suma ktorou chcem pomôcť",
+    "back": "Späť",
+    "email": "E-mailová adresa",
+    "gdpr": "Súhlasím so spracovaním mojich osobných údajov",
+    "name": "Meno a priezvisko",
+    "phone": "Telefónne číslo",
+    "shelter": "Najviac mi záleží na útulku",
+    "submit": "Odoslať formulár",
+    "type": "Akou formou chcem pomôcť",
     "title": "Skontrolujte si zadané údaje"
   }
 }
