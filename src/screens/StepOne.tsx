@@ -1,7 +1,9 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
+import { setForm } from 'store/formSlice';
 import { Shelter } from 'models/shelter';
 import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
@@ -10,11 +12,7 @@ import { Select } from 'components/Common/Select';
 import { AmountCard } from 'components/Common/AmountCard';
 import { AmountField } from 'components/Common/AmountField';
 import { Button } from 'components/Common/Button';
-
-import wallet_grey from 'assets/svg/wallet_grey.svg';
-import wallet_white from 'assets/svg/wallet_white.svg';
-import paw_grey from 'assets/svg/paw_grey.svg';
-import paw_white from 'assets/svg/paw_white.svg';
+import { useStepOneSchema } from 'utils/hooks/validations';
 
 const amounts = [5, 10, 20, 30, 50, 100];
 
@@ -25,83 +23,134 @@ const Wrapper = styled('div')`
 export const StepOne = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [requiredShelter, setRequiredShelter] = useState<boolean>(false);
+  const stepOneSchema = useStepOneSchema(requiredShelter);
   const shelters = useSelector<{ shelters: { value: Shelter[] } }>(
     (state) => state.shelters.value,
   ) as Shelter[];
 
-  const [active, setActive] = useState(CARD_SIDE.LEFT);
-  const handleChange = useCallback(
-    (type: CARD_SIDE) => () => {
-      setActive(type);
+  const stepOneForm = useFormik({
+    initialValues: {
+      type: CARD_SIDE.RIGHT,
+      shelterID: '',
+      value: 5,
+      customValue: '',
     },
-    [],
+    validationSchema: stepOneSchema,
+    onSubmit: async ({ shelterID, value, customValue }) => {
+      dispatch(
+        setForm({ shelterID, value: customValue ? customValue : value }),
+      );
+      dispatch(setTab(1));
+    },
+  });
+
+  const handleChange = useCallback(
+    (type: string, value: CARD_SIDE | number) => () => {
+      stepOneForm.setFieldValue(type, value);
+    },
+    [stepOneForm],
   );
 
-  const handleSubmit = useCallback(() => dispatch(setTab(1)), [dispatch]);
+  useEffect(() => {
+    if (stepOneForm.values.type === CARD_SIDE.LEFT) {
+      setRequiredShelter(true);
+    } else {
+      setRequiredShelter(false);
+    }
+  }, [stepOneForm.values.type]);
 
   return (
-    <Wrapper>
-      <br />
-      <Grid container>
-        <Grid item xs={6}>
-          <Card
-            text={t('step_one.card.specific_shelter')}
-            active={active === CARD_SIDE.LEFT}
-            side={CARD_SIDE.LEFT}
-            icon={active === CARD_SIDE.LEFT ? wallet_white : wallet_grey}
-            onClick={handleChange(CARD_SIDE.LEFT)}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Card
-            text={t('step_one.card.foundation')}
-            active={active === CARD_SIDE.RIGHT}
-            side={CARD_SIDE.RIGHT}
-            icon={active === CARD_SIDE.RIGHT ? paw_white : paw_grey}
-            onClick={handleChange(CARD_SIDE.RIGHT)}
-          />
-        </Grid>
-      </Grid>
-      <br />
-      <br />
-      <Grid container spacing={2}>
-        <Grid container item justifyContent="space-between">
-          <Typography variant="h2">{t('step_one.select.about')}</Typography>
-          <Typography variant="h4">{t('step_one.select.optional')}</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Select
-            label={t('step_one.select.label')}
-            placeholder={t('step_one.select.placeholder')}
-            items={shelters}
-          />
-        </Grid>
-      </Grid>
-      <br />
-      <br />
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h2">{t('step_one.amount_text')}</Typography>
-        </Grid>
-        <Grid container item spacing={1}>
-          {amounts.map((item, index) => (
-            <Grid item key={index}>
-              <AmountCard amount={item} active={index === 4} />
-            </Grid>
-          ))}
-          <Grid item>
-            <AmountField />
+    <form onSubmit={stepOneForm.handleSubmit}>
+      <Wrapper>
+        <br />
+        <Grid container>
+          <Grid item xs={6}>
+            <Card
+              name="type"
+              text={t('step_one.card.specific_shelter')}
+              side={CARD_SIDE.LEFT}
+              icon="wallet"
+              onClick={handleChange('type', CARD_SIDE.LEFT)}
+              value={stepOneForm.values.type}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Card
+              name="type"
+              text={t('step_one.card.foundation')}
+              side={CARD_SIDE.RIGHT}
+              icon="paw"
+              onClick={handleChange('type', CARD_SIDE.RIGHT)}
+              value={stepOneForm.values.type}
+            />
           </Grid>
         </Grid>
-      </Grid>
-      <br />
-      <br />
-      <br />
-      <Grid container justifyContent="flex-end">
-        <Button color="primary" onClick={handleSubmit}>
-          {t('step_one.submit')}
-        </Button>
-      </Grid>
-    </Wrapper>
+        <br />
+        <br />
+        <Grid container spacing={2}>
+          <Grid container item justifyContent="space-between">
+            <Typography variant="h2">{t('step_one.select.about')}</Typography>
+            <Typography variant="h4">
+              {t(
+                stepOneForm.values.type === CARD_SIDE.RIGHT
+                  ? 'step_one.select.optional'
+                  : 'step_one.select.required',
+              )}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Select
+              name="shelterID"
+              label={t('step_one.select.label')}
+              placeholder={t('step_one.select.placeholder')}
+              items={shelters}
+              onChange={stepOneForm.handleChange}
+              error={
+                stepOneForm.touched.shelterID &&
+                Boolean(stepOneForm.errors.shelterID)
+              }
+            />
+          </Grid>
+        </Grid>
+        <br />
+        <br />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h2">{t('step_one.amount_text')}</Typography>
+          </Grid>
+          <Grid container item spacing={1}>
+            {amounts.map((item, index) => (
+              <Grid item key={index}>
+                <AmountCard
+                  amount={item}
+                  active={
+                    stepOneForm.values.value === item &&
+                    Boolean(!stepOneForm.values.customValue)
+                  }
+                  onClick={handleChange('value', item)}
+                />
+              </Grid>
+            ))}
+            <Grid item>
+              <AmountField
+                name="customValue"
+                type="number"
+                onChange={stepOneForm.handleChange}
+                value={stepOneForm.values.customValue}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <br />
+        <br />
+        <br />
+        <Grid container justifyContent="flex-end">
+          <Button color="primary" type="submit">
+            {t('step_one.submit')}
+          </Button>
+        </Grid>
+      </Wrapper>
+    </form>
   );
 });

@@ -1,14 +1,23 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import { CardIcon } from './CardIcon';
+
+import wallet_grey from 'assets/svg/wallet_grey.svg';
+import wallet_white from 'assets/svg/wallet_white.svg';
+import paw_grey from 'assets/svg/paw_grey.svg';
+import paw_white from 'assets/svg/paw_white.svg';
 
 export enum CARD_SIDE {
   LEFT = 'left',
   RIGHT = 'right',
 }
 
-const Wrapper = styled('div')<{ active: boolean; side: CARD_SIDE }>`
+const Wrapper = styled('div')<{
+  active: boolean;
+  side: CARD_SIDE;
+  onClick: () => void;
+}>`
   width: 100%;
   padding: 24px;
   border: 1px solid ${({ theme }) => theme.palette.primary.main};
@@ -24,21 +33,35 @@ const Wrapper = styled('div')<{ active: boolean; side: CARD_SIDE }>`
 
 export const Card = memo(
   ({
+    name,
     text,
-    active,
     side,
     icon,
+    value,
     onClick,
   }: {
+    name: string;
     text: string;
-    active: boolean;
     side: CARD_SIDE;
     icon: string;
-    onClick?: any;
+    value: CARD_SIDE;
+    onClick: () => void;
   }) => {
+    const renderIcon = useMemo(() => {
+      const active = side === value;
+      switch (icon) {
+        case 'paw':
+          return active ? paw_white : paw_grey;
+        case 'wallet':
+          return active ? wallet_white : wallet_grey;
+        default:
+          return '';
+      }
+    }, [icon, side, value]);
+
     return (
-      <Wrapper active={active} side={side} onClick={onClick}>
-        <CardIcon icon={icon} />
+      <Wrapper active={side === value} side={side} onClick={onClick}>
+        <CardIcon icon={renderIcon} />
         <br />
         <Typography variant="h3">{text}</Typography>
       </Wrapper>

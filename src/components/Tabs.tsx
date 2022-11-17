@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setShelters } from 'store/sheltersSlice';
 import { Shelter } from 'models/shelter';
 import { useQuery } from 'utils/query';
-import { Stepper } from 'components/Common/Stepper';
+import { Stepper } from 'components/Stepper';
 import { StepOne } from 'screens/StepOne';
 import { StepTwo } from 'screens/StepTwo';
 import { StepThree } from 'screens/StepThree';

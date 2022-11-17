@@ -12,14 +12,16 @@ const StyledButton = styled(MButton)`
 export const Button = memo(
   ({
     children,
+    type,
     ...rest
   }: {
     children: ReactNode;
+    type?: 'submit';
     color?: 'primary' | 'secondary';
     onClick?: () => void;
   }) => {
     return (
-      <StyledButton variant="contained" {...rest}>
+      <StyledButton variant="contained" type={type} {...rest}>
         {children}
       </StyledButton>
     );

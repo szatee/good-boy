@@ -1,6 +1,7 @@
 import { memo, useCallback, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Select as MSelect, MenuItem, Typography } from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import { FormField } from 'components/Common/FormField';
 
@@ -26,26 +27,30 @@ const Placeholder = styled(Typography)`
 
 export const Select = memo(
   (props: {
+    name: string;
     items?: any[];
     label: string;
     placeholder: string;
     error?: boolean;
     helperText?: string;
+    onChange?: (e: string | SelectChangeEvent<any>) => void;
   }) => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     const handleToggleOpen = useCallback(
       () => setOpen((prevState) => !prevState),
       [],
     );
 
-    const { placeholder, items } = props;
+    const { placeholder, items, name, onChange } = props;
 
     return (
       <FormField {...props} onClick={handleToggleOpen}>
         <StyledSelect
+          name={name}
           open={open}
           displayEmpty
+          defaultValue={''}
           renderValue={(selected: any) => {
             if (!selected) {
               return <Placeholder>{placeholder}</Placeholder>;
@@ -54,6 +59,7 @@ export const Select = memo(
             return name;
           }}
           IconComponent={KeyboardArrowDown}
+          onChange={onChange}
           fullWidth
         >
           <MenuItem disabled value="">

@@ -12,9 +12,17 @@ const FormField = styled(MFormField)<{ active: boolean }>`
 `;
 
 export const AmountCard = memo(
-  ({ amount, active }: { amount: number; active: boolean }) => {
+  ({
+    amount,
+    active,
+    onClick,
+  }: {
+    amount: number;
+    active: boolean;
+    onClick: () => void;
+  }) => {
     return (
-      <FormField active={active}>
+      <FormField active={active} onClick={onClick}>
         <Typography variant="h2">{amount} €</Typography>
       </FormField>
     );

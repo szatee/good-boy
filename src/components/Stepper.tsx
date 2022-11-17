@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@mui/material';
-import { Step } from './Step';
+import { Step } from 'components/Common/Step';
 
 const steps = [0, 1, 2];
 
