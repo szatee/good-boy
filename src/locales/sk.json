@@ -2,6 +2,17 @@
   "common": {
     "foundation": "Nadácia Good Boy"
   },
+  "errors": {
+    "mixed": {
+      "required": "${path} je povinné pole"
+    },
+    "string": {
+      "email": "${path} musí byť v správnom formáte",
+      "max": "${path} musí obsahovať maximalne ${max} znakov",
+      "min": "${path} musí obsahovať minimalne ${min} znakov",
+      "phone": "Telefónne číslo musí mať správny formát"
+    }
+  },
   "footer": {
     "about": "O projekte",
     "how_do_it": "Ako na to",
@@ -39,7 +50,7 @@
         "last_name": "Zadajte Vaše priezvisko",
         "email": "Zadajte Váš e-mail",
         "phone_sk": "+421",
-        "phone_cs": "+420"
+        "phone_cz": "+420"
       }
     },
     "submit": "Pokračovať",

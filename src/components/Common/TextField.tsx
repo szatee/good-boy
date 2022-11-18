@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import type { ChangeEvent } from 'react';
 import { styled } from '@mui/material/styles';
 import { TextField as MTextField } from '@mui/material';
 import { FormField } from 'components/Common/FormField';
@@ -17,18 +18,27 @@ const StyledTextField = styled(MTextField)`
 
 export const TextField = memo(
   (props: {
+    name: string;
     label: string;
     placeholder: string;
     error?: boolean;
     helperText?: string;
     InputProps?: object;
+    onChange?: (e: ChangeEvent<any>) => void;
+    onBlur?: (e: any) => void;
+    value?: string;
   }) => {
+    const { name, placeholder, value, onChange, onBlur, InputProps } = props;
     return (
       <FormField {...props}>
         <StyledTextField
+          name={name}
           variant="outlined"
-          placeholder={props.placeholder}
-          InputProps={props.InputProps}
+          placeholder={placeholder}
+          InputProps={InputProps}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
           fullWidth
         />
       </FormField>

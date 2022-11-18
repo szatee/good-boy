@@ -1,21 +1,15 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { setTab } from 'store/tabSlice';
+import { setForm } from 'store/formSlice';
 import { styled } from '@mui/material/styles';
-import {
-  Grid,
-  Typography,
-  InputAdornment,
-  Menu,
-  MenuItem,
-} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Button } from 'components/Common/Button';
 import { TextField } from 'components/Common/TextField';
-import { Flag } from 'components/Common/Flag';
-
-import sk_flag from 'assets/svg/sk.svg';
-import cz_flag from 'assets/svg/cz.svg';
+import { useStepTwoSchema } from 'utils/hooks/validations';
+import { PhoneField } from 'components/Common/PhoneField';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -24,80 +18,114 @@ const Wrapper = styled('div')`
 export const StepTwo = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleOpenMenu = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) =>
-      setAnchorEl(event.currentTarget),
-    [],
-  );
-
-  const handleCloseMenu = useCallback(() => setAnchorEl(null), []);
 
   const handleBack = useCallback(() => dispatch(setTab(0)), [dispatch]);
-  const handleSubmit = useCallback(() => dispatch(setTab(2)), [dispatch]);
+
+  const stepTwoSchema = useStepTwoSchema();
+  const stepTwoForm = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+    },
+    validationSchema: stepTwoSchema,
+    onSubmit: async (values) => {
+      dispatch(setForm(values));
+      dispatch(setTab(2));
+    },
+  });
 
   return (
-    <Wrapper>
-      <br />
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h2">{t('step_two.about')}</Typography>
+    <form onSubmit={stepTwoForm.handleSubmit}>
+      <Wrapper>
+        <br />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h2">{t('step_two.about')}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="firstName"
+              label={t('step_two.form.label.first_name')}
+              placeholder={t('step_two.form.placeholder.first_name')}
+              onBlur={stepTwoForm.handleBlur}
+              error={
+                stepTwoForm.touched.firstName &&
+                Boolean(stepTwoForm.errors.firstName)
+              }
+              helperText={
+                (stepTwoForm.touched.firstName &&
+                  stepTwoForm.errors.firstName) ||
+                ' '
+              }
+              onChange={stepTwoForm.handleChange}
+              value={stepTwoForm.values.firstName}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="lastName"
+              label={t('step_two.form.label.last_name')}
+              placeholder={t('step_two.form.placeholder.last_name')}
+              onBlur={stepTwoForm.handleBlur}
+              error={
+                stepTwoForm.touched.lastName &&
+                Boolean(stepTwoForm.errors.lastName)
+              }
+              helperText={
+                (stepTwoForm.touched.lastName && stepTwoForm.errors.lastName) ||
+                ' '
+              }
+              onChange={stepTwoForm.handleChange}
+              value={stepTwoForm.values.lastName}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="email"
+              label={t('step_two.form.label.email')}
+              placeholder={t('step_two.form.placeholder.email')}
+              onBlur={stepTwoForm.handleBlur}
+              error={
+                stepTwoForm.touched.email && Boolean(stepTwoForm.errors.email)
+              }
+              helperText={
+                (stepTwoForm.touched.email && stepTwoForm.errors.email) || ' '
+              }
+              onChange={stepTwoForm.handleChange}
+              value={stepTwoForm.values.email}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <PhoneField
+              label={t('step_two.form.label.phone')}
+              placeholder={t('step_two.form.placeholder.phone_sk')}
+              error={
+                stepTwoForm.touched.phone && Boolean(stepTwoForm.errors.phone)
+              }
+              helperText={
+                (stepTwoForm.touched.phone && stepTwoForm.errors.phone) || ' '
+              }
+              setValue={(value: string) =>
+                stepTwoForm.setFieldValue('phone', value)
+              }
+              value={stepTwoForm.values.phone}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label={t('step_two.form.label.first_name')}
-            placeholder={t('step_two.form.placeholder.first_name')}
-            error={true}
-            helperText="Required field"
-          />
+        <br />
+        <br />
+        <br />
+        <Grid container justifyContent="space-between">
+          <Button color="secondary" onClick={handleBack}>
+            {t('step_two.back')}
+          </Button>
+          <Button color="primary" type="submit">
+            {t('step_two.submit')}
+          </Button>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label={t('step_two.form.label.last_name')}
-            placeholder={t('step_two.form.placeholder.last_name')}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label={t('step_two.form.label.email')}
-            placeholder={t('step_two.form.placeholder.email')}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label={t('step_two.form.label.phone')}
-            placeholder={t('step_two.form.placeholder.phone_sk')}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Flag icon={sk_flag} onClick={handleOpenMenu} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
-            <MenuItem onClick={handleCloseMenu}>
-              <Flag icon={sk_flag} />
-            </MenuItem>
-            <MenuItem onClick={handleCloseMenu}>
-              <Flag icon={cz_flag} />
-            </MenuItem>
-          </Menu>
-        </Grid>
-      </Grid>
-      <br />
-      <br />
-      <br />
-      <Grid container justifyContent="space-between">
-        <Button color="secondary" onClick={handleBack}>
-          {t('step_two.back')}
-        </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          {t('step_two.submit')}
-        </Button>
-      </Grid>
-    </Wrapper>
+      </Wrapper>
+    </form>
   );
 });
