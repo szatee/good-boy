@@ -14,7 +14,7 @@ export const useStepTwoSchema = () => {
       .min(2)
       .max(30)
       .label(t('step_two.form.label.last_name')),
-    email: string().email().required().label(t('step_two.form.label.email')),
+    email: string().email().label(t('step_two.form.label.email')),
     phone: string().matches(
       /([+]?\d{1,3}[. \s]?)?(\d{12}?)/g,
       t('errors.string.phone') ?? '',

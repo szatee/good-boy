@@ -4,10 +4,11 @@ export const formSlice = createSlice({
   name: 'form',
   initialState: {
     value: {
+      type: '',
       firstName: '',
       lastName: '',
       email: '',
-      value: '',
+      value: null,
       phone: '',
       shelterID: null,
     },

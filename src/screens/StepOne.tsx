@@ -32,14 +32,14 @@ export const StepOne = memo(() => {
   const stepOneForm = useFormik({
     initialValues: {
       type: CARD_SIDE.RIGHT,
-      shelterID: '',
+      shelterID: null,
       value: 5,
       customValue: '',
     },
     validationSchema: stepOneSchema,
-    onSubmit: async ({ shelterID, value, customValue }) => {
+    onSubmit: async ({ type, shelterID, value, customValue }) => {
       dispatch(
-        setForm({ shelterID, value: customValue ? customValue : value }),
+        setForm({ type, shelterID, value: customValue ? customValue : value }),
       );
       dispatch(setTab(1));
     },
