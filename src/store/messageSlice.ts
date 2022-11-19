@@ -8,7 +8,7 @@ const selectSelf = (state: { message: SliceState }) => state.message;
 const initialState: SliceState = {
   value: {
     type: 'success',
-    text: '',
+    message: '',
   },
 };
 

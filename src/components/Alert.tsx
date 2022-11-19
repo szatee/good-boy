@@ -14,19 +14,19 @@ export const Alert = memo(() => {
         return false;
       }
 
-      dispatch(setMessage({ text: '' }));
+      dispatch(setMessage({ message: '' }));
     },
     [dispatch],
   );
 
   return (
     <Snackbar
-      open={Boolean(message.text)}
+      open={Boolean(message.message)}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       autoHideDuration={2000}
       onClose={handleClose}
     >
-      {message.text ? (
+      {message.message ? (
         <MAlert
           onClose={handleClose}
           severity={message.type}
@@ -35,7 +35,7 @@ export const Alert = memo(() => {
             success: <Pets fontSize="inherit" />,
           }}
         >
-          {message.text}
+          {message.message}
         </MAlert>
       ) : (
         <div />

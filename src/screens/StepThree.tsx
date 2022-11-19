@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
 import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { Checkbox } from 'components/Common/Checkbox';
 import { Button } from 'components/Common/Button';
 import { CARD_SIDE } from 'components/Common/Card';
 import { renderText } from 'utils/text';
 import { useStepThreeSchema } from 'utils/hooks/validations';
-import { getForm } from 'store/formSlice';
+import { getForm, initialState, setForm } from 'store/formSlice';
 import { selectShelters } from 'store/sheltersSlice';
+import { useAddContributeMutation } from 'store/contributeSlice';
 import { setMessage } from 'store/messageSlice';
 
 const Wrapper = styled('div')`
@@ -24,7 +26,7 @@ export const StepThree = memo(() => {
   const stepThreeSchema = useStepThreeSchema();
   const form = useSelector(getForm);
   const shelter = useSelector(selectShelters(form.shelterID));
-
+  const [addContribute, { isLoading }] = useAddContributeMutation();
   const handleBack = useCallback(() => dispatch(setTab(1)), [dispatch]);
 
   const stepThreeForm = useFormik({
@@ -33,12 +35,23 @@ export const StepThree = memo(() => {
     },
     validationSchema: stepThreeSchema,
     onSubmit: async () => {
-      dispatch(
-        setMessage({
-          type: 'success',
-          text: t('step_three.submit_text'),
-        }),
-      );
+      const { firstName, lastName, email, phone, value, shelterID } = form;
+
+      const res = await addContribute({
+        firstName,
+        lastName,
+        email,
+        phone,
+        value,
+        shelterID,
+      }).unwrap();
+
+      if (res) {
+        const { type, message } = res.messages[0];
+        dispatch(setMessage({ type: type.toLowerCase(), message }));
+        dispatch(setTab(0));
+        dispatch(setForm(initialState.value));
+      }
     },
   });
 
@@ -127,9 +140,14 @@ export const StepThree = memo(() => {
           <Button color="secondary" onClick={handleBack}>
             {t('step_three.back')}
           </Button>
-          <Button color="primary" type="submit">
+          <LoadingButton
+            color="primary"
+            type="submit"
+            variant="contained"
+            loading={isLoading}
+          >
             {t('step_three.submit')}
-          </Button>
+          </LoadingButton>
         </Grid>
       </Wrapper>
     </form>

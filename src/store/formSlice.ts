@@ -6,7 +6,7 @@ type SliceState = { value: Form };
 
 const selectSelf = (state: { form: SliceState }) => state.form;
 
-const initialState: SliceState = {
+export const initialState: SliceState = {
   value: {
     type: CARD_SIDE.RIGHT,
     firstName: '',
