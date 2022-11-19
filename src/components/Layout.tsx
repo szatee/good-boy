@@ -4,34 +4,45 @@ import { styled } from '@mui/material/styles';
 import { Grid, Divider as MDivider } from '@mui/material';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { useBreakpoints } from 'utils/hooks/useBreakpoints';
 
 import dog from 'assets/dog.png';
 
-const Wrapper = styled(Grid)`
+const Wrapper = styled('div')<{ isLaptop: boolean }>`
   max-width: 1140px;
   margin: 0 auto;
-  padding: 80px 0;
+  padding: ${({ isLaptop }) => (isLaptop ? '80px 40px' : '80px 0')};
 `;
+
+const Image = styled('img')`
+  width: 100%;
+`;
+
 const Divider = styled(MDivider)`
   padding-top: 80px;
 `;
 
-export const Layout = memo(({ children }: { children?: ReactNode }) => (
-  <Fragment>
-    <Header />
-    <Wrapper>
-      <Grid container justifyContent="space-between">
-        <Grid item xs={6}>
-          {children}
+export const Layout = memo(({ children }: { children?: ReactNode }) => {
+  const { isLaptop, isTablet } = useBreakpoints();
+  return (
+    <Fragment>
+      <Header />
+      <Wrapper isLaptop={isLaptop}>
+        <Grid container justifyContent="space-between">
+          <Grid item xs={isTablet ? 12 : 7}>
+            {children}
+          </Grid>
+          {!isTablet && (
+            <Grid item xs={4}>
+              <Image src={dog} alt="goodboy_dog" width="100%" />
+            </Grid>
+          )}
         </Grid>
-        <Grid item xs={4}>
-          <img src={dog} alt="goodboy_dog" />
+        <Grid item>
+          <Divider />
         </Grid>
-      </Grid>
-      <Grid item>
-        <Divider />
-      </Grid>
-    </Wrapper>
-    <Footer />
-  </Fragment>
-));
+      </Wrapper>
+      <Footer />
+    </Fragment>
+  );
+});

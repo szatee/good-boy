@@ -1,7 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 import type { Shadows } from '@mui/material/styles';
 
-export const theme = createTheme({
+const t = createTheme();
+
+export const theme = createTheme(t, {
   palette: {
     background: {
       default: '#FFFFFF',
@@ -70,6 +72,10 @@ export const theme = createTheme({
       fontWeight: '700',
       lineHeight: '52px',
       fontFamily: ['Hind', 'sans-serif'].join(','),
+      [t.breakpoints.down('sm')]: {
+        fontSize: '34px',
+        lineHeight: '40px',
+      },
     },
     h2: {
       fontSize: '16px',

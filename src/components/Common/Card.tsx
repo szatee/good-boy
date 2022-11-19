@@ -19,6 +19,7 @@ const Wrapper = styled('div')<{
   onClick: () => void;
 }>`
   width: 100%;
+  height: 100%;
   padding: 24px;
   border: 1px solid ${({ theme }) => theme.palette.primary.main};
   background-image: ${({ theme, active }) =>

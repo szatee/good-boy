@@ -74,7 +74,7 @@ export const StepOne = memo(() => {
     <form onSubmit={stepOneForm.handleSubmit}>
       <Wrapper>
         <br />
-        <Grid container>
+        <Grid container item xs={12}>
           <Grid item xs={6}>
             <Card
               name="type"
