@@ -1,9 +1,9 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
-import { setForm } from 'store/formSlice';
+import { getForm, setForm } from 'store/formSlice';
 import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
 import { Button } from 'components/Common/Button';
@@ -11,6 +11,7 @@ import { TextField } from 'components/Common/TextField';
 import { useStepTwoSchema } from 'utils/hooks/validations';
 import { PhoneField } from 'components/Common/PhoneField';
 import { formatPhone } from 'utils/phone';
+import { Form } from 'models/form';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -19,18 +20,27 @@ const Wrapper = styled('div')`
 export const StepTwo = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const form = useSelector(getForm);
+  const [initialValues, setInitialValues] = useState<Form>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+  });
+
+  useEffect(() => {
+    if (form) {
+      setInitialValues(form);
+    }
+  }, [form]);
 
   const handleBack = useCallback(() => dispatch(setTab(0)), [dispatch]);
 
   const stepTwoSchema = useStepTwoSchema();
   const stepTwoForm = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-    },
+    initialValues,
     validationSchema: stepTwoSchema,
+    enableReinitialize: true,
     onSubmit: async (values) => {
       dispatch(setForm({ ...values, phone: formatPhone(values.phone) }));
       dispatch(setTab(2));

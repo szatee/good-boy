@@ -15,7 +15,7 @@ export enum CARD_SIDE {
 
 const Wrapper = styled('div')<{
   active: boolean;
-  side: CARD_SIDE;
+  side: string;
   onClick: () => void;
 }>`
   width: 100%;
@@ -42,9 +42,9 @@ export const Card = memo(
   }: {
     name: string;
     text: string;
-    side: CARD_SIDE;
+    side: string;
     icon: string;
-    value: CARD_SIDE;
+    value?: string;
     onClick: () => void;
   }) => {
     const renderIcon = useMemo(() => {

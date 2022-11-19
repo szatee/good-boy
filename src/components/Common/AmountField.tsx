@@ -36,7 +36,7 @@ export const AmountField = memo(
   }: {
     name: string;
     type: 'number';
-    value: number | string;
+    value?: number | string;
     onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   }) => {
     return (

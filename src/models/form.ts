@@ -1,9 +1,10 @@
 export interface Form {
-  type: string;
+  type?: string;
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
-  value: number;
-  shelterID: number | string;
+  value?: number;
+  customValue?: string | number;
+  shelterID?: number | string;
 }

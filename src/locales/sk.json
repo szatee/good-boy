@@ -30,7 +30,8 @@
       "label": "Útulok",
       "placeholder": "Vyberte útulok zo zoznamu",
       "optional": "Nepovinné",
-      "required": "Povinné"
+      "required": "Povinné",
+      "validation_text": "Vyberte prosím útulok"
     },
     "submit": "Pokračovať",
     "title": "Vyberte si možnosť, ako chcete pomôcť"

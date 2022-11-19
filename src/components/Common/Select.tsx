@@ -34,6 +34,7 @@ export const Select = memo(
     error?: boolean;
     helperText?: string;
     onChange?: (e: string | SelectChangeEvent<any>) => void;
+    value?: number | string;
   }) => {
     const [open, setOpen] = useState<boolean>(false);
 
@@ -42,7 +43,7 @@ export const Select = memo(
       [],
     );
 
-    const { placeholder, items, name, onChange } = props;
+    const { placeholder, items, name, onChange, value } = props;
 
     return (
       <FormField {...props} onClick={handleToggleOpen}>
@@ -51,6 +52,7 @@ export const Select = memo(
           open={open}
           displayEmpty
           defaultValue={''}
+          value={value}
           renderValue={(selected: any) => {
             if (!selected) {
               return <Placeholder>{placeholder}</Placeholder>;

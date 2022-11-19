@@ -69,7 +69,7 @@ export const StepThree = memo(() => {
               <Typography variant="h2">{t('step_three.amount')}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography>{renderText(form.value)} €</Typography>
+              <Typography>{renderText(form.value ?? '')} €</Typography>
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>

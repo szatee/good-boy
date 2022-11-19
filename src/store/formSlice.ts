@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { CARD_SIDE } from 'components/Common/Card';
 import { Form } from 'models/form';
 
 type SliceState = { value: Form };
@@ -7,11 +8,12 @@ const selectSelf = (state: { form: SliceState }) => state.form;
 
 const initialState: SliceState = {
   value: {
-    type: '',
+    type: CARD_SIDE.RIGHT,
     firstName: '',
     lastName: '',
     email: '',
     value: 5,
+    customValue: '',
     phone: '',
     shelterID: '',
   },

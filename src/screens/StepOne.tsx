@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
-import { setForm } from 'store/formSlice';
+import { getForm, setForm } from 'store/formSlice';
 import { selectShelters } from 'store/sheltersSlice';
 import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
@@ -13,6 +13,7 @@ import { AmountCard } from 'components/Common/AmountCard';
 import { AmountField } from 'components/Common/AmountField';
 import { Button } from 'components/Common/Button';
 import { useStepOneSchema } from 'utils/hooks/validations';
+import { Form } from 'models/form';
 
 const amounts = [5, 10, 20, 30, 50, 100];
 
@@ -23,18 +24,29 @@ const Wrapper = styled('div')`
 export const StepOne = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const [initialValues, setInitialValues] = useState<Partial<Form>>({
+    type: CARD_SIDE.RIGHT,
+    shelterID: '',
+    value: 5,
+    customValue: '',
+  });
+
   const [requiredShelter, setRequiredShelter] = useState<boolean>(false);
   const stepOneSchema = useStepOneSchema(requiredShelter);
   const shelters = useSelector(selectShelters());
+  const form = useSelector(getForm);
+
+  useEffect(() => {
+    if (form) {
+      setInitialValues(form);
+    }
+  }, [form]);
 
   const stepOneForm = useFormik({
-    initialValues: {
-      type: CARD_SIDE.RIGHT,
-      shelterID: '',
-      value: 5,
-      customValue: '',
-    },
+    initialValues,
     validationSchema: stepOneSchema,
+    enableReinitialize: true,
     onSubmit: async ({ type, shelterID, value, customValue }) => {
       dispatch(
         setForm({ type, shelterID, value: customValue ? customValue : value }),
@@ -108,6 +120,12 @@ export const StepOne = memo(() => {
                 stepOneForm.touched.shelterID &&
                 Boolean(stepOneForm.errors.shelterID)
               }
+              helperText={
+                (stepOneForm.touched.shelterID &&
+                  stepOneForm.errors.shelterID) ||
+                ' '
+              }
+              value={stepOneForm.values.shelterID}
             />
           </Grid>
         </Grid>
