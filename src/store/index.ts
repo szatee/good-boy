@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { api } from 'services/api';
 import { tabReducer } from './tabSlice';
 import { formReducer } from './formSlice';
+import { messageReducer } from './messageSlice';
 
 const createStore = () =>
   configureStore({
@@ -9,6 +10,7 @@ const createStore = () =>
       [api.reducerPath]: api.reducer,
       tab: tabReducer,
       form: formReducer,
+      message: messageReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),

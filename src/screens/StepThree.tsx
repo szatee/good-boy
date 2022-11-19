@@ -12,6 +12,7 @@ import { renderText } from 'utils/text';
 import { useStepThreeSchema } from 'utils/hooks/validations';
 import { getForm } from 'store/formSlice';
 import { selectShelters } from 'store/sheltersSlice';
+import { setMessage } from 'store/messageSlice';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -31,7 +32,14 @@ export const StepThree = memo(() => {
       gdpr: false,
     },
     validationSchema: stepThreeSchema,
-    onSubmit: async (values) => {},
+    onSubmit: async () => {
+      dispatch(
+        setMessage({
+          type: 'success',
+          text: t('step_three.submit_text'),
+        }),
+      );
+    },
   });
 
   const handleToggleGdpr = useCallback(

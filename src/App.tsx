@@ -13,6 +13,7 @@ import {
 import { theme } from './theme';
 import { Layout } from 'components/Layout';
 import { Tabs } from 'components/Tabs';
+import { Alert } from 'components/Alert';
 
 store.dispatch(sheltersSlice.endpoints.getShelters.initiate('shelters'));
 
@@ -27,6 +28,7 @@ export const App = memo(() => {
           <Layout>
             <Tabs />
           </Layout>
+          <Alert />
         </ThemeProvider>
       </Provider>
     </StyledEngineProvider>
