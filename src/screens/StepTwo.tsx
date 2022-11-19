@@ -10,7 +10,6 @@ import { Button } from 'components/Common/Button';
 import { TextField } from 'components/Common/TextField';
 import { useStepTwoSchema } from 'utils/hooks/validations';
 import { PhoneField } from 'components/Common/PhoneField';
-import { formatPhone } from 'utils/phone';
 import { Form } from 'models/form';
 
 const Wrapper = styled('div')`
@@ -42,7 +41,7 @@ export const StepTwo = memo(() => {
     validationSchema: stepTwoSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      dispatch(setForm({ ...values, phone: formatPhone(values.phone) }));
+      dispatch(setForm(values));
       dispatch(setTab(2));
     },
   });

@@ -41,9 +41,9 @@ export const StepThree = memo(() => {
         firstName,
         lastName,
         email,
-        phone,
+        phone: Boolean(phone) ? `+${phone}` : '',
         value,
-        shelterID,
+        shelterID: Boolean(shelterID) && shelterID,
       }).unwrap();
 
       if (res) {
@@ -116,7 +116,9 @@ export const StepThree = memo(() => {
               <Typography variant="h2">{t('step_three.phone')}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography>{renderText(form.phone)}</Typography>
+              <Typography>
+                {(form.phone && '+') + renderText(form.phone)}
+              </Typography>
             </Grid>
           </Grid>
           <Grid container item alignItems="center">
