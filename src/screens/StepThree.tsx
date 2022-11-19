@@ -7,12 +7,11 @@ import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
 import { Checkbox } from 'components/Common/Checkbox';
 import { Button } from 'components/Common/Button';
-import { Form } from 'models/form';
 import { CARD_SIDE } from 'components/Common/Card';
-import { Shelter } from 'models/shelter';
-import { findShelterByID } from 'utils/shelter';
 import { renderText } from 'utils/text';
 import { useStepThreeSchema } from 'utils/hooks/validations';
+import { getForm } from 'store/formSlice';
+import { selectShelters } from 'store/sheltersSlice';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -22,16 +21,10 @@ export const StepThree = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const stepThreeSchema = useStepThreeSchema();
-  const form = useSelector<{ form: { value: Form } }>(
-    (state) => state.form.value,
-  ) as Form;
-  const shelters = useSelector<{ shelters: { value: Shelter[] } }>(
-    (state) => state.shelters.value,
-  ) as Shelter[];
+  const form = useSelector(getForm);
+  const shelter = useSelector(selectShelters(form.shelterID));
 
   const handleBack = useCallback(() => dispatch(setTab(1)), [dispatch]);
-
-  const { name: shelterName } = findShelterByID(form.shelterID, shelters) ?? {};
 
   const stepThreeForm = useFormik({
     initialValues: {
@@ -68,7 +61,7 @@ export const StepThree = memo(() => {
               <Typography variant="h2">{t('step_three.shelter')}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography>{renderText(shelterName)}</Typography>
+              <Typography>{renderText(shelter?.name ?? '')}</Typography>
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>

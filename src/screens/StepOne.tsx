@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
 import { setForm } from 'store/formSlice';
-import { Shelter } from 'models/shelter';
+import { selectShelters } from 'store/sheltersSlice';
 import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
 import { Card, CARD_SIDE } from 'components/Common/Card';
@@ -25,14 +25,12 @@ export const StepOne = memo(() => {
   const dispatch = useDispatch();
   const [requiredShelter, setRequiredShelter] = useState<boolean>(false);
   const stepOneSchema = useStepOneSchema(requiredShelter);
-  const shelters = useSelector<{ shelters: { value: Shelter[] } }>(
-    (state) => state.shelters.value,
-  ) as Shelter[];
+  const shelters = useSelector(selectShelters());
 
   const stepOneForm = useFormik({
     initialValues: {
       type: CARD_SIDE.RIGHT,
-      shelterID: null,
+      shelterID: '',
       value: 5,
       customValue: '',
     },

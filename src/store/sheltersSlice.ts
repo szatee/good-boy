@@ -1,15 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
+import { api } from 'services/api';
 
-export const sheltersSlice = createSlice({
-  name: 'shelters',
-  initialState: { value: [] },
-  reducers: {
-    setShelters: (state, action) => {
-      state.value = action.payload;
-    },
-  },
+export const sheltersSlice = api.injectEndpoints({
+  endpoints: (build) => ({
+    getShelters: build.query({
+      query: () => 'shelters',
+    }),
+  }),
 });
 
-export const { setShelters } = sheltersSlice.actions;
+export const { useGetSheltersQuery } = sheltersSlice;
 
-export const sheltersReducer = sheltersSlice.reducer;
+const selectSheltersResult =
+  sheltersSlice.endpoints.getShelters.select('shelters');
+
+export const selectShelters = (id?: string | number) =>
+  createSelector(selectSheltersResult, (result) => {
+    const { shelters } = result.data ?? {};
+    if (id) {
+      return (
+        shelters.find((shelter: { id: string }) => shelter.id === id) ?? {}
+      );
+    }
+    return shelters ?? [];
+  });

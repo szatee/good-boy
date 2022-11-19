@@ -1,11 +1,9 @@
-import { CARD_SIDE } from 'components/Common/Card';
-
 export interface Form {
-  type: CARD_SIDE;
+  type: string;
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
   value: number;
-  shelterID: number;
+  shelterID: number | string;
 }

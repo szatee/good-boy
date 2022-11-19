@@ -1,10 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+
+type SliceState = { value: number };
+
+const selectSelf = (state: { tab: SliceState }) => state.tab;
+
+const initialState: SliceState = { value: 0 };
 
 export const tabSlice = createSlice({
   name: 'tab',
-  initialState: {
-    value: 0,
-  },
+  initialState,
   reducers: {
     setTab: (state, action) => {
       state.value = action.payload;
@@ -13,5 +17,7 @@ export const tabSlice = createSlice({
 });
 
 export const { setTab } = tabSlice.actions;
+
+export const getTab = createSelector(selectSelf, (state) => state.value);
 
 export const tabReducer = tabSlice.reducer;
