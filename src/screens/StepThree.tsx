@@ -43,7 +43,7 @@ export const StepThree = memo(() => {
         email,
         phone: Boolean(phone) ? `+${phone}` : '',
         value,
-        shelterID: Boolean(shelterID) && shelterID,
+        shelterID: Boolean(shelterID) ? shelterID : null,
       }).unwrap();
 
       if (res) {
