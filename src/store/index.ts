@@ -1,6 +1,15 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import storageSession from 'reduxjs-toolkit-persist/lib/storage/session';
-import { persistReducer, persistStore } from 'redux-persist';
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import { api } from 'services/api';
 import { formReducer } from './formSlice';
 import { messageReducer } from './messageSlice';
@@ -22,7 +31,11 @@ const createStore = () =>
   configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(api.middleware),
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }).concat(api.middleware),
   });
 
 export const store = createStore();
