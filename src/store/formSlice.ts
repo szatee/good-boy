@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { CARD_SIDE } from 'components/Common/Card';
+import { CARD_SIDE } from 'components/common/Card';
 import { Form } from 'models/form';
 
 type SliceState = { value: Form };

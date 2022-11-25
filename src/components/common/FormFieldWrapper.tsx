@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react';
+import { memo } from 'react';
 import type { ReactNode } from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
@@ -20,7 +20,7 @@ const HelperText = styled(Typography)`
   text-align: right;
 `;
 
-export const FormField = memo(
+export const FormFieldWrapper = memo(
   ({
     label,
     children,
@@ -36,12 +36,12 @@ export const FormField = memo(
     onClick?: () => void;
     className?: string;
   }) => (
-    <Fragment>
+    <>
       <Wrapper error={error} onClick={onClick} className={className}>
         <Typography variant="h2">{label}</Typography>
         {children}
       </Wrapper>
       <HelperText>{helperText}</HelperText>
-    </Fragment>
+    </>
   ),
 );

@@ -13,7 +13,7 @@ import {
 import { theme } from './theme';
 import { Layout } from 'components/Layout';
 import { Tabs } from 'components/Tabs';
-import { Alert } from 'components/Alert';
+import { Alert } from 'components/common/Alert';
 
 store.dispatch(sheltersSlice.endpoints.getShelters.initiate('shelters'));
 

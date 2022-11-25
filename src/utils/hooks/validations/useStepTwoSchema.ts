@@ -6,6 +6,7 @@ export const useStepTwoSchema = () => {
   const { t } = useTranslation();
   return object({
     firstName: string()
+      .required()
       .min(2)
       .max(20)
       .label(t('step_two.form.label.first_name')),

@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react';
+import { memo } from 'react';
 import type { ReactNode } from 'react';
 import { styled } from '@mui/material/styles';
 import { Grid, Divider as MDivider } from '@mui/material';
@@ -25,7 +25,7 @@ const Divider = styled(MDivider)`
 export const Layout = memo(({ children }: { children?: ReactNode }) => {
   const { isLaptop, isTablet } = useBreakpoints();
   return (
-    <Fragment>
+    <>
       <Header />
       <Wrapper isLaptop={isLaptop}>
         <Grid container justifyContent="space-between">
@@ -34,7 +34,7 @@ export const Layout = memo(({ children }: { children?: ReactNode }) => {
           </Grid>
           {!isTablet && (
             <Grid item xs={4}>
-              <Image src={dog} alt="goodboy_dog" width="100%" />
+              <Image src={dog} alt="goodboy_dog" />
             </Grid>
           )}
         </Grid>
@@ -43,6 +43,6 @@ export const Layout = memo(({ children }: { children?: ReactNode }) => {
         </Grid>
       </Wrapper>
       <Footer />
-    </Fragment>
+    </>
   );
 });

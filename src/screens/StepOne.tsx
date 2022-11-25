@@ -5,21 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
 import { getForm, setForm } from 'store/formSlice';
 import { selectShelters } from 'store/sheltersSlice';
-import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
-import { Card, CARD_SIDE } from 'components/Common/Card';
-import { Select } from 'components/Common/Select';
-import { AmountCard } from 'components/Common/AmountCard';
-import { AmountField } from 'components/Common/AmountField';
-import { Button } from 'components/Common/Button';
+import { Card, CARD_SIDE } from 'components/common/Card';
+import { Select } from 'components/common/Select';
+import { AmountCard } from 'components/common/AmountCard';
+import { AmountField } from 'components/common/forms/AmountField';
+import { Button } from 'components/common/Button';
+import { Wrapper } from 'components/common/Wrapper';
 import { useStepOneSchema } from 'utils/hooks/validations';
 import { Form } from 'models/form';
 
 const amounts = [5, 10, 20, 30, 50, 100];
-
-const Wrapper = styled('div')`
-  width: 100%;
-`;
 
 export const StepOne = memo(() => {
   const { t } = useTranslation();
@@ -73,7 +69,6 @@ export const StepOne = memo(() => {
   return (
     <form onSubmit={stepOneForm.handleSubmit}>
       <Wrapper>
-        <br />
         <Grid container item xs={12}>
           <Grid item xs={6}>
             <Card
@@ -96,9 +91,8 @@ export const StepOne = memo(() => {
             />
           </Grid>
         </Grid>
-        <br />
-        <br />
-        <Grid container spacing={2}>
+
+        <Grid container item spacing={2}>
           <Grid container item justifyContent="space-between">
             <Typography variant="h2">{t('step_one.select.about')}</Typography>
             <Typography variant="h4">
@@ -129,9 +123,7 @@ export const StepOne = memo(() => {
             />
           </Grid>
         </Grid>
-        <br />
-        <br />
-        <Grid container spacing={2}>
+        <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2">{t('step_one.amount_text')}</Typography>
           </Grid>
@@ -158,10 +150,8 @@ export const StepOne = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <br />
-        <br />
-        <br />
-        <Grid container justifyContent="flex-end">
+
+        <Grid container item justifyContent="flex-end">
           <Button color="primary" type="submit">
             {t('step_one.submit')}
           </Button>

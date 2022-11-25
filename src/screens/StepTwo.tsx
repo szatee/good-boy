@@ -4,17 +4,13 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
 import { getForm, setForm } from 'store/formSlice';
-import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
-import { Button } from 'components/Common/Button';
-import { TextField } from 'components/Common/TextField';
+import { Button } from 'components/common/Button';
+import { TextField } from 'components/common/TextField';
+import { Wrapper } from 'components/common/Wrapper';
 import { useStepTwoSchema } from 'utils/hooks/validations';
-import { PhoneField } from 'components/Common/PhoneField';
+import { PhoneField } from 'components/common/forms/PhoneField';
 import { Form } from 'models/form';
-
-const Wrapper = styled('div')`
-  width: 100%;
-`;
 
 export const StepTwo = memo(() => {
   const { t } = useTranslation();
@@ -49,8 +45,7 @@ export const StepTwo = memo(() => {
   return (
     <form onSubmit={stepTwoForm.handleSubmit}>
       <Wrapper>
-        <br />
-        <Grid container spacing={2}>
+        <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2">{t('step_two.about')}</Typography>
           </Grid>
@@ -124,10 +119,7 @@ export const StepTwo = memo(() => {
             />
           </Grid>
         </Grid>
-        <br />
-        <br />
-        <br />
-        <Grid container justifyContent="space-between">
+        <Grid container item justifyContent="space-between">
           <Button color="secondary" onClick={handleBack}>
             {t('step_two.back')}
           </Button>

@@ -3,22 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from 'store/tabSlice';
-import { styled } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { Checkbox } from 'components/Common/Checkbox';
-import { Button } from 'components/Common/Button';
-import { CARD_SIDE } from 'components/Common/Card';
+import { Checkbox } from 'components/common/Checkbox';
+import { Button } from 'components/common/Button';
+import { Wrapper } from 'components/common/Wrapper';
+import { CARD_SIDE } from 'components/common/Card';
 import { renderText } from 'utils/text';
 import { useStepThreeSchema } from 'utils/hooks/validations';
 import { getForm, initialState, setForm } from 'store/formSlice';
 import { selectShelters } from 'store/sheltersSlice';
 import { useAddContributeMutation } from 'store/contributeSlice';
 import { setMessage } from 'store/messageSlice';
-
-const Wrapper = styled('div')`
-  width: 100%;
-`;
 
 export const StepThree = memo(() => {
   const { t } = useTranslation();
@@ -63,8 +59,7 @@ export const StepThree = memo(() => {
   return form ? (
     <form onSubmit={stepThreeForm.handleSubmit}>
       <Wrapper>
-        <br />
-        <Grid container spacing={3}>
+        <Grid container item spacing={3}>
           <Grid container item xs={12} spacing={1}>
             <Grid item xs={12}>
               <Typography variant="h2">{t('step_three.type')}</Typography>
@@ -135,10 +130,7 @@ export const StepThree = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <br />
-        <br />
-        <br />
-        <Grid container justifyContent="space-between">
+        <Grid container item justifyContent="space-between">
           <Button color="secondary" onClick={handleBack}>
             {t('step_three.back')}
           </Button>

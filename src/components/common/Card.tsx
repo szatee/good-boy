@@ -63,7 +63,6 @@ export const Card = memo(
     return (
       <Wrapper active={side === value} side={side} onClick={onClick}>
         <CardIcon icon={renderIcon} />
-        <br />
         <Typography variant="h3">{text}</Typography>
       </Wrapper>
     );

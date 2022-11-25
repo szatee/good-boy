@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react';
+import { memo } from 'react';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { Divider, Grid, Typography } from '@mui/material';
@@ -24,7 +24,7 @@ export const Header = memo(() => {
   const { t } = useTranslation();
   const { isLaptop } = useBreakpoints();
   return (
-    <Fragment>
+    <>
       <Wrapper isLaptop={isLaptop}>
         <Grid container alignItems="center" justifyContent="space-between">
           <HeaderText>{t('common.foundation')}</HeaderText>
@@ -47,6 +47,6 @@ export const Header = memo(() => {
         </Grid>
       </Wrapper>
       <Divider />
-    </Fragment>
+    </>
   );
 });

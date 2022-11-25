@@ -1,4 +1,4 @@
-import { memo, Fragment, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { getTab } from 'store/tabSlice';
 import { useSelector } from 'react-redux';
 import { Stepper } from 'components/Stepper';
@@ -21,9 +21,9 @@ export const Tabs = memo(() => {
   }, [step]);
 
   return (
-    <Fragment>
+    <>
       <Stepper />
       {renderStep}
-    </Fragment>
+    </>
   );
 });

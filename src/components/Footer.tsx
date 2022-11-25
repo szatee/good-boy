@@ -8,12 +8,16 @@ import logo from 'assets/logo.png';
 const Wrapper = styled('div')<{ isLaptop: boolean }>`
   max-width: 1140px;
   margin: 0 auto;
-  padding-bottom: 80px;
+  margin-bottom: 60px;
   padding: ${({ isLaptop }) => (isLaptop ? '0 40px' : '0')};
 `;
 
+const FooterTitle = styled(Typography)`
+  margin-bottom: 20px;
+`;
+
 const FooterText = styled(Typography)`
-  color: #585757;
+  color: ${({ theme }) => theme.palette.secondary.dark};
   margin-bottom: 12px;
 `;
 
@@ -39,24 +43,18 @@ export const Footer = memo(() => {
           marginTop="30px"
         >
           <Grid container item flexDirection="column" xs={isMobile ? 12 : 3}>
-            <Typography variant="h2">{t('common.foundation')}</Typography>
-            <br />
+            <FooterTitle variant="h2">{t('common.foundation')}</FooterTitle>
             <FooterText>{t('footer.about')}</FooterText>
             <FooterText>{t('footer.how_do_it')}</FooterText>
             <FooterText>{t('footer.contact')}</FooterText>
-            <br />
           </Grid>
           <Grid container item flexDirection="column" xs={isMobile ? 12 : 3}>
-            <Typography variant="h2">{t('common.foundation')}</Typography>
-            <br />
+            <FooterTitle variant="h2">{t('common.foundation')}</FooterTitle>
             <FooterText>{t('footer.lorem')}</FooterText>
-            <br />
           </Grid>
           <Grid container item flexDirection="column" xs={isMobile ? 12 : 3}>
-            <Typography variant="h2">{t('common.foundation')}</Typography>
-            <br />
+            <FooterTitle variant="h2">{t('common.foundation')}</FooterTitle>
             <FooterText>{t('footer.lorem')}</FooterText>
-            <br />
           </Grid>
         </Grid>
       </Grid>

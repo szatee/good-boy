@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { getTab } from 'store/tabSlice';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@mui/material';
-import { Step } from 'components/Common/Step';
+import { Step } from 'components/common/Step';
 
 const steps = [0, 1, 2];
 

@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Select as MSelect, MenuItem, Typography } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
-import { FormField } from 'components/Common/FormField';
+import { FormFieldWrapper } from 'components/common/FormFieldWrapper';
 
 const StyledSelect = styled(MSelect)`
   border: none;
@@ -46,7 +46,7 @@ export const Select = memo(
     const { placeholder, items, name, onChange, value } = props;
 
     return (
-      <FormField {...props} onClick={handleToggleOpen}>
+      <FormFieldWrapper {...props} onClick={handleToggleOpen}>
         <StyledSelect
           name={name}
           open={open}
@@ -73,7 +73,7 @@ export const Select = memo(
             </MenuItem>
           ))}
         </StyledSelect>
-      </FormField>
+      </FormFieldWrapper>
     );
   },
 );

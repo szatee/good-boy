@@ -2,9 +2,9 @@ import { memo } from 'react';
 import type { ChangeEvent } from 'react';
 import { styled } from '@mui/material/styles';
 import { Grid, TextField as MTextField, Typography } from '@mui/material';
-import { FormField as MFormField } from './FormField';
+import { FormFieldWrapper as MFormFieldWrapper } from 'components/common/FormFieldWrapper';
 
-const FormField = styled(MFormField)`
+const FormFieldWrapper = styled(MFormFieldWrapper)`
   padding: 16px;
 `;
 const TextField = styled(MTextField)`
@@ -40,7 +40,7 @@ export const AmountField = memo(
     onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   }) => {
     return (
-      <FormField>
+      <FormFieldWrapper>
         <Grid container>
           <TextField
             name={name}
@@ -52,7 +52,7 @@ export const AmountField = memo(
           />
           <Typography variant="h2"> €</Typography>
         </Grid>
-      </FormField>
+      </FormFieldWrapper>
     );
   },
 );

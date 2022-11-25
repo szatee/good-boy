@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { FormField } from 'components/Common/FormField';
+import { FormFieldWrapper } from 'components/common/FormFieldWrapper';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { PHONE_REGION } from 'models/phone';
@@ -31,7 +31,7 @@ export const PhoneField = memo(
   }) => {
     const { placeholder, value, setValue, onBlur } = props;
     return (
-      <FormField {...props}>
+      <FormFieldWrapper {...props}>
         <PhoneInput
           inputStyle={inputStyle}
           buttonStyle={flagButtonStyle}
@@ -43,7 +43,7 @@ export const PhoneField = memo(
           onBlur={onBlur}
           onChange={setValue}
         />
-      </FormField>
+      </FormFieldWrapper>
     );
   },
 );

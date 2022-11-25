@@ -2,7 +2,7 @@ import { memo } from 'react';
 import type { ChangeEvent } from 'react';
 import { styled } from '@mui/material/styles';
 import { TextField as MTextField } from '@mui/material';
-import { FormField } from 'components/Common/FormField';
+import { FormFieldWrapper } from 'components/common/FormFieldWrapper';
 
 const StyledTextField = styled(MTextField)`
   .MuiInputBase-input {
@@ -30,7 +30,7 @@ export const TextField = memo(
   }) => {
     const { name, placeholder, value, onChange, onBlur, InputProps } = props;
     return (
-      <FormField {...props}>
+      <FormFieldWrapper {...props}>
         <StyledTextField
           name={name}
           variant="outlined"
@@ -41,7 +41,7 @@ export const TextField = memo(
           value={value}
           fullWidth
         />
-      </FormField>
+      </FormFieldWrapper>
     );
   },
 );
