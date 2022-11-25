@@ -1,8 +1,8 @@
 import { memo, useCallback, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTab } from 'store/tabSlice';
 import { getForm, setForm } from 'store/formSlice';
 import { Grid, Typography } from '@mui/material';
 import { Button } from 'components/common/Button';
@@ -14,6 +14,7 @@ import { Form } from 'models/form';
 
 export const StepTwo = memo(() => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const form = useSelector(getForm);
   const [initialValues, setInitialValues] = useState<Form>({
@@ -29,7 +30,7 @@ export const StepTwo = memo(() => {
     }
   }, [form]);
 
-  const handleBack = useCallback(() => dispatch(setTab(0)), [dispatch]);
+  const handleBack = useCallback(() => navigate(-1), [navigate]);
 
   const stepTwoSchema = useStepTwoSchema();
   const stepTwoForm = useFormik({
@@ -38,7 +39,7 @@ export const StepTwo = memo(() => {
     enableReinitialize: true,
     onSubmit: async (values) => {
       dispatch(setForm(values));
-      dispatch(setTab(2));
+      navigate('/check-info');
     },
   });
 

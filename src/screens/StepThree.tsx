@@ -1,8 +1,8 @@
 import { memo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTab } from 'store/tabSlice';
 import { Grid, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox } from 'components/common/Checkbox';
@@ -18,12 +18,12 @@ import { setMessage } from 'store/messageSlice';
 
 export const StepThree = memo(() => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const stepThreeSchema = useStepThreeSchema();
   const form = useSelector(getForm);
   const shelter = useSelector(selectShelters(form.shelterID));
   const [addContribute, { isLoading }] = useAddContributeMutation();
-  const handleBack = useCallback(() => dispatch(setTab(1)), [dispatch]);
 
   const stepThreeForm = useFormik({
     initialValues: {
@@ -45,11 +45,13 @@ export const StepThree = memo(() => {
       if (res) {
         const { type, message } = res.messages[0];
         dispatch(setMessage({ type: type.toLowerCase(), message }));
-        dispatch(setTab(0));
+        navigate('/');
         dispatch(setForm(initialState.value));
       }
     },
   });
+
+  const handleBack = useCallback(() => navigate(-1), [navigate]);
 
   const handleToggleGdpr = useCallback(
     (value: any) => () => stepThreeForm.setFieldValue('gdpr', value),

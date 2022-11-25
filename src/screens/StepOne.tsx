@@ -1,8 +1,8 @@
 import { memo, useCallback, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTab } from 'store/tabSlice';
 import { getForm, setForm } from 'store/formSlice';
 import { selectShelters } from 'store/sheltersSlice';
 import { Grid, Typography } from '@mui/material';
@@ -20,7 +20,7 @@ const amounts = [5, 10, 20, 30, 50, 100];
 export const StepOne = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState<Partial<Form>>({
     type: CARD_SIDE.RIGHT,
     shelterID: '',
@@ -47,7 +47,7 @@ export const StepOne = memo(() => {
       dispatch(
         setForm({ type, shelterID, value: customValue ? customValue : value }),
       );
-      dispatch(setTab(1));
+      navigate('/info');
     },
   });
 

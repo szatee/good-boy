@@ -58,6 +58,7 @@ export const theme = createTheme(t, {
         },
         containedSecondary: {
           backgroundColor: '#F3E2D9',
+          color: '#2F2F2F',
           ':hover': {
             backgroundColor: '#F3E2D9',
           },

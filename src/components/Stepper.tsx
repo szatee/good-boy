@@ -1,6 +1,4 @@
 import { memo, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getTab } from 'store/tabSlice';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@mui/material';
 import { Step } from 'components/common/Step';
@@ -9,7 +7,7 @@ const steps = [0, 1, 2];
 
 export const Stepper = memo(() => {
   const { t } = useTranslation();
-  const step = useSelector(getTab);
+  const step = steps[0];
 
   const renderTitle = useMemo(() => {
     switch (step) {

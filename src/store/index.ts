@@ -1,21 +1,32 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import storageSession from 'reduxjs-toolkit-persist/lib/storage/session';
+import { persistReducer, persistStore } from 'redux-persist';
 import { api } from 'services/api';
-import { tabReducer } from './tabSlice';
 import { formReducer } from './formSlice';
 import { messageReducer } from './messageSlice';
 
+const persistConfig = {
+  key: 'root',
+  storage: storageSession,
+};
+
+const rootReducer = combineReducers({
+  [api.reducerPath]: api.reducer,
+  form: formReducer,
+  message: messageReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const createStore = () =>
   configureStore({
-    reducer: {
-      [api.reducerPath]: api.reducer,
-      tab: tabReducer,
-      form: formReducer,
-      message: messageReducer,
-    },
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),
   });
 
 export const store = createStore();
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
