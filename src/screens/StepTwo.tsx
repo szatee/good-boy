@@ -124,7 +124,11 @@ export const StepTwo = memo(() => {
           <Button color="secondary" onClick={handleBack}>
             {t('step_two.back')}
           </Button>
-          <Button color="primary" type="submit">
+          <Button
+            color="primary"
+            type="submit"
+            disabled={!stepTwoForm.isValid && !stepTwoForm.dirty}
+          >
             {t('step_two.submit')}
           </Button>
         </Grid>

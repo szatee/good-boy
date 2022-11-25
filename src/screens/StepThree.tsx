@@ -79,7 +79,7 @@ export const StepThree = memo(() => {
               <Typography variant="h2">{t('step_three.shelter')}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography>{renderText(shelter?.name ?? '')}</Typography>
+              <Typography>{renderText(shelter.name ?? '')}</Typography>
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
@@ -141,6 +141,7 @@ export const StepThree = memo(() => {
             type="submit"
             variant="contained"
             loading={isLoading}
+            disabled={!stepThreeForm.isValid && !stepThreeForm.dirty}
           >
             {t('step_three.submit')}
           </LoadingButton>
