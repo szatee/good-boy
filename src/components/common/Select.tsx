@@ -1,6 +1,12 @@
 import { memo, useCallback, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Select as MSelect, MenuItem, Typography } from '@mui/material';
+import {
+  CircularProgress,
+  Grid,
+  Select as MSelect,
+  MenuItem,
+  Typography,
+} from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import { FormFieldWrapper } from 'components/common/FormFieldWrapper';
@@ -64,14 +70,24 @@ export const Select = memo(
           onChange={onChange}
           fullWidth
         >
-          <MenuItem disabled value="">
-            <Typography>{placeholder}</Typography>
-          </MenuItem>
-          {items?.map(({ id, name }) => (
-            <MenuItem key={id} value={id}>
-              <Typography>{name}</Typography>
+          {items ? (
+            <>
+              <MenuItem disabled value="">
+                <Typography>{placeholder}</Typography>
+              </MenuItem>
+              {items.map(({ id, name }) => (
+                <MenuItem key={id} value={id}>
+                  <Typography>{name}</Typography>
+                </MenuItem>
+              ))}
+            </>
+          ) : (
+            <MenuItem disabled value="">
+              <Grid container justifyContent="center">
+                <CircularProgress />
+              </Grid>
             </MenuItem>
-          ))}
+          )}
         </StyledSelect>
       </FormFieldWrapper>
     );
