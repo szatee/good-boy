@@ -1,8 +1,12 @@
 import { memo, useCallback, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Select as MSelect, MenuItem, Typography } from '@mui/material';
-import type { SelectChangeEvent } from '@mui/material';
-import { KeyboardArrowDown } from '@mui/icons-material';
+import {
+  IconButton as MIconButton,
+  Select as MSelect,
+  MenuItem,
+  Typography,
+} from '@mui/material';
+import { Clear, KeyboardArrowDown } from '@mui/icons-material';
 import { FormFieldWrapper } from 'components/common/FormFieldWrapper';
 
 const StyledSelect = styled(MSelect)`
@@ -14,11 +18,19 @@ const StyledSelect = styled(MSelect)`
   .MuiSelect-outlined {
     padding: 0;
   }
+
   & > svg {
     margin-top: -10px;
     margin-right: -10px;
     color: ${({ theme }) => theme.palette.secondary.main};
+    display: ${({ value }) => (value ? 'none' : '')};
   }
+`;
+
+const IconButton = styled(MIconButton)`
+  margin-top: -20px;
+  margin-right: -20px;
+  display: ${({ value }) => (value ? '' : 'none')};
 `;
 
 const Placeholder = styled(Typography)`
@@ -33,7 +45,7 @@ export const Select = memo(
     placeholder: string;
     error?: boolean;
     helperText?: string;
-    onChange?: (e: string | SelectChangeEvent<any>) => void;
+    onChange: (event: any) => void;
     value?: number | string;
   }) => {
     const [open, setOpen] = useState<boolean>(false);
@@ -44,6 +56,19 @@ export const Select = memo(
     );
 
     const { placeholder, items, name, onChange, value } = props;
+
+    const handleClearClick = useCallback(
+      (e: any) => {
+        e.stopPropagation();
+        onChange({
+          target: {
+            name,
+            value: '',
+          },
+        });
+      },
+      [name, onChange],
+    );
 
     return (
       <FormFieldWrapper {...props} onClick={handleToggleOpen}>
@@ -62,6 +87,11 @@ export const Select = memo(
           }}
           IconComponent={KeyboardArrowDown}
           onChange={onChange}
+          endAdornment={
+            <IconButton value={value} onClick={handleClearClick}>
+              <Clear />
+            </IconButton>
+          }
           fullWidth
         >
           <MenuItem disabled value="">
