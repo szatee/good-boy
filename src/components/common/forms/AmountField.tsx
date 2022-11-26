@@ -13,6 +13,9 @@ const TextField = styled(MTextField)`
   .MuiInputBase-input {
     padding: 0;
     height: 19px;
+    color: ${({ theme }) => theme.palette.background.default};
+    font-size: 16px;
+    font-weight: 800;
   }
   input[type='number'] {
     -moz-appearance: textfield;
@@ -32,15 +35,17 @@ export const AmountField = memo(
     name,
     value,
     type,
+    active,
     onChange,
   }: {
     name: string;
     type: 'number';
     value?: number | string;
+    active?: boolean;
     onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   }) => {
     return (
-      <FormFieldWrapper>
+      <FormFieldWrapper active={active}>
         <Grid container>
           <TextField
             name={name}

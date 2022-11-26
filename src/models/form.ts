@@ -4,7 +4,7 @@ export interface Form {
   lastName: string;
   phone: string;
   email: string;
-  value?: number;
+  value: number | null;
   customValue?: string | number;
-  shelterID?: number | string;
+  shelterID?: string | number;
 }

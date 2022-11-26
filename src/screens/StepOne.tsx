@@ -1,4 +1,5 @@
 import { memo, useState, useEffect, useCallback } from 'react';
+import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
@@ -17,6 +18,12 @@ import { Form } from 'models/form';
 
 const amounts = [5, 10, 20, 30, 50, 100];
 
+const HelperText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.error.main};
+  text-align: right;
+  margin-top: -16px;
+`;
+
 export const StepOne = memo(() => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -28,14 +35,19 @@ export const StepOne = memo(() => {
     customValue: '',
   });
 
-  const [requiredShelter, setRequiredShelter] = useState<boolean>(false);
-  const stepOneSchema = useStepOneSchema(requiredShelter);
+  const stepOneSchema = useStepOneSchema();
   const shelters = useSelector(selectShelters());
   const form = useSelector(getForm);
 
   useEffect(() => {
     if (form) {
-      setInitialValues(form);
+      const { value } = form as Form;
+      const hasCustomValue = value && !amounts.includes(value);
+      setInitialValues({
+        ...form,
+        value: !hasCustomValue ? value : null,
+        customValue: hasCustomValue ? value : '',
+      });
     }
   }, [form]);
 
@@ -50,16 +62,6 @@ export const StepOne = memo(() => {
       navigate('/info');
     },
   });
-
-  useEffect(() => {
-    if (stepOneForm.values.type === CARD_SIDE.LEFT) {
-      setRequiredShelter(true);
-    } else {
-      setRequiredShelter(false);
-      stepOneForm.setTouched({}, false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepOneForm.values.type]);
 
   const handleChangeAmountCard = useCallback(
     (value: number) => () => {
@@ -131,7 +133,7 @@ export const StepOne = memo(() => {
         </Grid>
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h2">{t('step_one.amount_text')}</Typography>
+            <Typography variant="h2">{t('step_one.amount.text')}</Typography>
           </Grid>
           <Grid container item spacing={1}>
             {amounts.map((item, index) => (
@@ -151,13 +153,21 @@ export const StepOne = memo(() => {
               <AmountField
                 name="customValue"
                 type="number"
+                active={Boolean(stepOneForm.values.customValue)}
                 onChange={stepOneForm.handleChange}
                 value={stepOneForm.values.customValue}
               />
             </Grid>
           </Grid>
+          <Grid item xs={12}>
+            <HelperText>
+              {stepOneForm.touched.customValue &&
+              Boolean(stepOneForm.errors.customValue)
+                ? stepOneForm.errors.customValue
+                : ''}
+            </HelperText>
+          </Grid>
         </Grid>
-
         <Grid container item justifyContent="flex-end">
           <Button color="primary" type="submit">
             {t('step_one.submit')}

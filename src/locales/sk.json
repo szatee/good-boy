@@ -20,7 +20,10 @@
     "lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in interdum ipsum, sit amet. "
   },
   "step_one": {
-    "amount_text": "Suma, ktorou chcem prispieť",
+    "amount": {
+      "text": "Suma, ktorou chcem prispieť",
+      "validation_text": "Zadajte prosím sumu, ktorou chcete prispieť"
+    },
     "card": {
       "specific_shelter": "Chcem finančne prispieť konkrétnemu útulku",
       "foundation": "Chcem finančne prispieť celej nadácii"

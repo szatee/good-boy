@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 
-const Wrapper = styled('div')<{ error?: boolean }>`
+const Wrapper = styled('div')<{ error?: boolean; active?: boolean }>`
   border-radius: 8px;
   border: 1px solid
     ${({ theme, error }) =>
@@ -13,6 +13,10 @@ const Wrapper = styled('div')<{ error?: boolean }>`
   :hover {
     border: 1px solid ${({ theme }) => theme.palette.primary.main};
   }
+  background-image: ${({ theme, active }) =>
+    active ? theme.palette.primary.light : theme.palette.background.default};
+  color: ${({ theme, active }) =>
+    active ? theme.palette.background.default : theme.palette.text.primary};
 `;
 
 const HelperText = styled(Typography)`
@@ -28,6 +32,7 @@ export const FormFieldWrapper = memo(
     helperText,
     onClick,
     className,
+    active,
   }: {
     label?: string;
     error?: boolean;
@@ -35,9 +40,15 @@ export const FormFieldWrapper = memo(
     children: ReactNode;
     onClick?: () => void;
     className?: string;
+    active?: boolean;
   }) => (
     <>
-      <Wrapper error={error} onClick={onClick} className={className}>
+      <Wrapper
+        error={error}
+        onClick={onClick}
+        className={className}
+        active={active}
+      >
         <Typography variant="h2">{label}</Typography>
         {children}
       </Wrapper>
