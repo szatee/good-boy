@@ -1,4 +1,5 @@
 import { memo, useCallback, useState } from 'react';
+import type { FocusEventHandler } from 'react';
 import { styled } from '@mui/material/styles';
 import {
   IconButton as MIconButton,
@@ -8,6 +9,7 @@ import {
 } from '@mui/material';
 import { Clear, KeyboardArrowDown } from '@mui/icons-material';
 import { FormFieldWrapper } from 'components/common/FormFieldWrapper';
+import { useEvent } from 'utils/formik';
 
 const StyledSelect = styled(MSelect)`
   border: none;
@@ -46,6 +48,7 @@ export const Select = memo(
     error?: boolean;
     helperText?: string;
     onChange: (event: any) => void;
+    onBlur: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     value?: number | string;
   }) => {
     const [open, setOpen] = useState<boolean>(false);
@@ -55,19 +58,23 @@ export const Select = memo(
       [],
     );
 
-    const { placeholder, items, name, onChange, value } = props;
+    const {
+      placeholder,
+      items,
+      name,
+      onChange: _onChange,
+      onBlur,
+      value,
+    } = props;
+
+    const onChange = useEvent(_onChange, name);
 
     const handleClearClick = useCallback(
       (e: any) => {
         e.stopPropagation();
-        onChange({
-          target: {
-            name,
-            value: '',
-          },
-        });
+        onChange('');
       },
-      [name, onChange],
+      [onChange],
     );
 
     return (
@@ -86,7 +93,8 @@ export const Select = memo(
             return name;
           }}
           IconComponent={KeyboardArrowDown}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={onBlur}
           endAdornment={
             <IconButton value={value} onClick={handleClearClick}>
               <Clear />

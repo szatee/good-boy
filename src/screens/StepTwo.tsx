@@ -17,7 +17,7 @@ export const StepTwo = memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const form = useSelector(getForm);
-  const [initialValues, setInitialValues] = useState<Form>({
+  const [initialValues, setInitialValues] = useState<Partial<Form>>({
     firstName: '',
     lastName: '',
     email: '',

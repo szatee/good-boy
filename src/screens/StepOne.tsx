@@ -1,4 +1,4 @@
-import { memo, useCallback, useState, useEffect } from 'react';
+import { memo, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
@@ -51,20 +51,25 @@ export const StepOne = memo(() => {
     },
   });
 
-  const handleChange = useCallback(
-    (type: string, value: CARD_SIDE | number) => () => {
-      stepOneForm.setFieldValue(type, value);
-    },
-    [stepOneForm],
-  );
-
   useEffect(() => {
     if (stepOneForm.values.type === CARD_SIDE.LEFT) {
       setRequiredShelter(true);
     } else {
       setRequiredShelter(false);
+      stepOneForm.setTouched({}, false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepOneForm.values.type]);
+
+  const handleChangeAmountCard = useCallback(
+    (value: number) => () => {
+      stepOneForm.setFieldValue('value', value);
+      if (Boolean(stepOneForm.values.customValue)) {
+        stepOneForm.setFieldValue('customValue', '');
+      }
+    },
+    [stepOneForm],
+  );
 
   return (
     <form onSubmit={stepOneForm.handleSubmit}>
@@ -76,7 +81,7 @@ export const StepOne = memo(() => {
               text={t('step_one.card.specific_shelter')}
               side={CARD_SIDE.LEFT}
               icon="wallet"
-              onClick={handleChange('type', CARD_SIDE.LEFT)}
+              onClick={stepOneForm.handleChange}
               value={stepOneForm.values.type}
             />
           </Grid>
@@ -86,7 +91,7 @@ export const StepOne = memo(() => {
               text={t('step_one.card.foundation')}
               side={CARD_SIDE.RIGHT}
               icon="paw"
-              onClick={handleChange('type', CARD_SIDE.RIGHT)}
+              onClick={stepOneForm.handleChange}
               value={stepOneForm.values.type}
             />
           </Grid>
@@ -110,6 +115,7 @@ export const StepOne = memo(() => {
               placeholder={t('step_one.select.placeholder')}
               items={shelters}
               onChange={stepOneForm.handleChange}
+              onBlur={stepOneForm.handleBlur}
               error={
                 stepOneForm.touched.shelterID &&
                 Boolean(stepOneForm.errors.shelterID)
@@ -131,12 +137,13 @@ export const StepOne = memo(() => {
             {amounts.map((item, index) => (
               <Grid item key={index}>
                 <AmountCard
+                  name="value"
                   amount={item}
                   active={
                     stepOneForm.values.value === item &&
                     Boolean(!stepOneForm.values.customValue)
                   }
-                  onClick={handleChange('value', item)}
+                  onClick={handleChangeAmountCard(item)}
                 />
               </Grid>
             ))}

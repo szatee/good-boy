@@ -6,7 +6,9 @@ export const useStepOneSchema = (required: boolean) => {
   return (
     required &&
     object({
-      shelterID: string().required(t('step_one.select.validation_text') ?? ''),
+      shelterID:
+        required &&
+        string().required(t('step_one.select.validation_text') ?? ''),
     })
   );
 };

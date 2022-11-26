@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import { CardIcon } from './CardIcon';
+import { useEvent } from 'utils/formik';
 
 import wallet_grey from 'assets/svg/wallet_grey.svg';
 import wallet_white from 'assets/svg/wallet_white.svg';
@@ -16,7 +17,7 @@ export enum CARD_SIDE {
 const Wrapper = styled('div')<{
   active: boolean;
   side: string;
-  onClick: () => void;
+  onClick?: (event: any) => void;
 }>`
   width: 100%;
   height: 100%;
@@ -46,7 +47,7 @@ export const Card = memo(
     side: string;
     icon: string;
     value?: string;
-    onClick: () => void;
+    onClick: (event: any) => void;
   }) => {
     const renderIcon = useMemo(() => {
       const active = side === value;
@@ -60,8 +61,14 @@ export const Card = memo(
       }
     }, [icon, side, value]);
 
+    const onChange = useEvent(onClick, name);
+
     return (
-      <Wrapper active={side === value} side={side} onClick={onClick}>
+      <Wrapper
+        active={side === value}
+        side={side}
+        onClick={() => onChange(side)}
+      >
         <CardIcon icon={renderIcon} />
         <Typography variant="h3">{text}</Typography>
       </Wrapper>
