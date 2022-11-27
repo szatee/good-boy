@@ -16,11 +16,14 @@ const selectSheltersResult =
 
 export const selectShelters = (id?: string | number) =>
   createSelector(selectSheltersResult, (result) => {
-    const { shelters } = result.data ?? {};
-    if (id) {
-      return (
-        shelters.find((shelter: { id: string }) => shelter.id === id) ?? {}
-      );
+    if (result) {
+      const { data: { shelters } = {} } = result;
+
+      if (id) {
+        return (
+          shelters?.find((shelter: { id: string }) => shelter.id === id) ?? {}
+        );
+      }
+      return shelters;
     }
-    return shelters ?? [];
   });

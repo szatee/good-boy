@@ -6,6 +6,8 @@ import {
   Select as MSelect,
   MenuItem,
   Typography,
+  CircularProgress,
+  Grid,
 } from '@mui/material';
 import { Clear, KeyboardArrowDown } from '@mui/icons-material';
 import { FormFieldWrapper } from 'components/common/FormFieldWrapper';
@@ -79,38 +81,44 @@ export const Select = memo(
 
     return (
       <FormFieldWrapper {...props} onClick={handleToggleOpen}>
-        <StyledSelect
-          name={name}
-          open={open}
-          displayEmpty
-          defaultValue={''}
-          value={value}
-          renderValue={(selected: any) => {
-            if (!selected) {
-              return <Placeholder>{placeholder}</Placeholder>;
+        {items ? (
+          <StyledSelect
+            name={name}
+            open={open}
+            displayEmpty
+            defaultValue={''}
+            value={value}
+            renderValue={(selected: any) => {
+              if (!selected) {
+                return <Placeholder>{placeholder}</Placeholder>;
+              }
+              const { name } = items?.find(({ id }) => id === selected) ?? {};
+              return name;
+            }}
+            IconComponent={KeyboardArrowDown}
+            onChange={(e) => onChange(e.target.value)}
+            onBlur={onBlur}
+            endAdornment={
+              <IconButton value={value} onClick={handleClearClick}>
+                <Clear />
+              </IconButton>
             }
-            const { name } = items?.find(({ id }) => id === selected) ?? {};
-            return name;
-          }}
-          IconComponent={KeyboardArrowDown}
-          onChange={(e) => onChange(e.target.value)}
-          onBlur={onBlur}
-          endAdornment={
-            <IconButton value={value} onClick={handleClearClick}>
-              <Clear />
-            </IconButton>
-          }
-          fullWidth
-        >
-          <MenuItem disabled value="">
-            <Typography>{placeholder}</Typography>
-          </MenuItem>
-          {items?.map(({ id, name }) => (
-            <MenuItem key={id} value={id}>
-              <Typography>{name}</Typography>
+            fullWidth
+          >
+            <MenuItem disabled value="">
+              <Typography>{placeholder}</Typography>
             </MenuItem>
-          ))}
-        </StyledSelect>
+            {items?.map(({ id, name }) => (
+              <MenuItem key={id} value={id}>
+                <Typography>{name}</Typography>
+              </MenuItem>
+            ))}
+          </StyledSelect>
+        ) : (
+          <Grid container justifyContent="center">
+            <CircularProgress size={24} />
+          </Grid>
+        )}
       </FormFieldWrapper>
     );
   },
