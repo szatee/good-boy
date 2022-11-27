@@ -7,6 +7,7 @@ import { Footer } from './Footer';
 import { useBreakpoints } from 'utils/hooks/useBreakpoints';
 
 import dog from 'assets/dog.png';
+import { Stepper } from './Stepper';
 
 const Wrapper = styled('div')<{ isLaptop: boolean }>`
   max-width: 1140px;
@@ -27,9 +28,11 @@ export const Layout = memo(({ children }: { children?: ReactNode }) => {
   return (
     <>
       <Header />
+
       <Wrapper isLaptop={isLaptop}>
         <Grid container justifyContent="space-between">
           <Grid item xs={isTablet ? 12 : 7}>
+            <Stepper />
             {children}
           </Grid>
           {!isTablet && (
