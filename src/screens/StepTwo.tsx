@@ -53,7 +53,7 @@ export const StepTwo = memo(() => {
           <Grid item xs={12}>
             <TextField
               name="firstName"
-              label={t('step_two.form.label.first_name')}
+              label={t('step_two.form.label.first_name') + ' *'}
               placeholder={t('step_two.form.placeholder.first_name')}
               onBlur={stepTwoForm.handleBlur}
               error={
@@ -72,7 +72,7 @@ export const StepTwo = memo(() => {
           <Grid item xs={12}>
             <TextField
               name="lastName"
-              label={t('step_two.form.label.last_name')}
+              label={t('step_two.form.label.last_name') + ' *'}
               placeholder={t('step_two.form.placeholder.last_name')}
               onBlur={stepTwoForm.handleBlur}
               error={

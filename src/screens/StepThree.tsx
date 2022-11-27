@@ -15,6 +15,7 @@ import { getForm, initialState, setForm } from 'store/formSlice';
 import { selectShelters } from 'store/sheltersSlice';
 import { useAddContributeMutation } from 'store/contributeSlice';
 import { setMessage } from 'store/messageSlice';
+import { isErrorWithMessage } from 'utils/errorHelper';
 
 export const StepThree = memo(() => {
   const { t } = useTranslation();
@@ -33,20 +34,27 @@ export const StepThree = memo(() => {
     onSubmit: async () => {
       const { firstName, lastName, email, phone, value, shelterID } = form;
 
-      const res = await addContribute({
-        firstName,
-        lastName,
-        email,
-        phone: Boolean(phone) ? `+${phone}` : '',
-        value,
-        shelterID: Boolean(shelterID) ? shelterID : null,
-      }).unwrap();
-
-      if (res) {
-        const { type, message } = res.messages[0];
-        dispatch(setMessage({ type: type.toLowerCase(), message }));
-        navigate('/');
-        dispatch(setForm(initialState.value));
+      try {
+        const res = await addContribute({
+          firstName,
+          lastName,
+          email,
+          phone: Boolean(phone) ? `+${phone}` : '',
+          value,
+          shelterID: Boolean(shelterID) ? shelterID : null,
+        }).unwrap();
+        if (res) {
+          const { type, message } = res.messages[0];
+          dispatch(setMessage({ type: type.toLowerCase(), message }));
+          navigate('/');
+          dispatch(setForm(initialState.value));
+        }
+      } catch (err) {
+        if (isErrorWithMessage(err)) {
+          const error = err.data.messages[0];
+          const { type, message } = error;
+          dispatch(setMessage({ type: type.toLowerCase(), message }));
+        }
       }
     },
   });

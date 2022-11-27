@@ -44,8 +44,8 @@
     "back": "Späť",
     "form": {
       "label": {
-        "first_name": "Meno *",
-        "last_name": "Priezvisko *",
+        "first_name": "Meno",
+        "last_name": "Priezvisko",
         "email": "E-mailová adresa",
         "phone": "Telefónne číslo"
       },
